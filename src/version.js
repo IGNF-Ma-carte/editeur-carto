@@ -14,8 +14,8 @@ const lib = [
   gpfol,
   olext
 ]
+const libinfo = lib.map(l => l.name + ' - ' + l.version)
 
-const libinfo = lib.map(l => l.name + '-' + l.version)
 // Display project info
 console.log(
   '%cCarte.gouv %cby IGN\n%c' + ver.name + '%c v.' + ver.version + '%c\n' + libinfo.join('\n'),
