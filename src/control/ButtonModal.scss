@@ -1,0 +1,18 @@
+
+button[id^=GPbuttonModalPicto-][aria-pressed=false]+dialog {
+  display:none;
+  visibility:hidden;
+  opacity:0%
+}
+button[id^=GPbuttonModalPicto-][aria-pressed=true]+dialog {
+  display:flex;
+  flex-direction:column;
+  visibility:visible;
+  opacity:100%
+}
+
+.position-container-top-left {
+  .gpf-widget-button:has(>.gpf-btn-icon[aria-pressed=true]):after {
+    top: 44px;
+  }
+}
