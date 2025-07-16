@@ -1,4 +1,5 @@
 // Import des fichiers CSS
+import './version'
 import './dsfr.js'
 import carte from './carte.js'
 import './page/menu.js'
