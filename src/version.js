@@ -14,7 +14,7 @@ const lib = [
   gpfol,
   olext
 ]
-const libinfo = lib.map(l => l.name + ' - ' + l.version)
+const libinfo = lib.map(l => l.name + ' - v.' + l.version)
 
 // Display project info
 console.log(

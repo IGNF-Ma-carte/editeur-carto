@@ -12,11 +12,16 @@ const dialogControl = new ButtonModal({
 });
 
 carte.addControl('popover', dialogControl);
+
+// Handle print button
 dialogControl.dialogContent.querySelector('button.fr-icon-printer-line').addEventListener('click', () => {
+  // Add ScaleLine on canvas
   carte.getControl('scaleLine').element.style.visibility = 'hidden'
+  // Print
   carte.getControl('printDlg').print();
 })
 carte.getControl('printDlg')._printDialog.on('hide', () => {
+  // Remove ScaleLine from canvas
   carte.getControl('scaleLine').element.style.visibility = '';
   carte.getMap().render()
 })

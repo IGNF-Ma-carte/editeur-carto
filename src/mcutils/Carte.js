@@ -5,10 +5,16 @@ import {
   SearchEngine,
 } from 'geopf-extensions-openlayers';
 
-/** GPP Carte
- * 
+/** GPP Carte overwrite Carte options / controls
  */
 class GPPCarte extends Carte {
+  /** Constructor 
+   * @param {*} options
+   *  @param {string|Element} [options.target]
+   *  @param {string} options.key GPP api key
+   *  @param {string} options.url carte file url
+   *  @param {string} options.id carte id
+   */
   constructor(options) {
     super(options);
     

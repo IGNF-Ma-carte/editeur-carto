@@ -11,14 +11,6 @@ import './css/control.scss'
 
 import './css/dsfr.scss'
 
-
-/*
-import Bar from "ol-ext/control/Bar";
-import Button from "ol-ext/control/Button";
-import ButtonText from "ol-ext/control/TextButton";
-*/
-
-
 /* DEBUG */
 window.carte = carte
 /**/
