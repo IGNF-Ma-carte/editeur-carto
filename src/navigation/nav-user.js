@@ -1,5 +1,7 @@
 import { Menu } from './utils'
 
+import './nav-user.scss'
+
 // Menu
 const account = new Menu ({
   icon: 'fr-icon-account-fill',
@@ -17,11 +19,13 @@ account.addMenu([
   }, {
     type: 'link',
     label: 'Tableau de bord',
+    action: 'board',
     href: '#',
     icon : 'fr-icon-dashboard-3-line'
   }, {
     type: 'link',
     label: 'Mon compte',
+    action: 'account',
     href: '#',
     icon : 'fr-icon-user-line'
   }, {
@@ -44,8 +48,23 @@ console.log('Menu disconnect', account.getMenu('disconnect'))
 // Get info when ready
 setTimeout(() => {
   console.log('Menu disconnect', account.getAllMenu('disconnect'))
-  // Disconnect user
+  // Connect / disconnect user
   account.getAllMenu('disconnect').forEach(m => {
-    m.link.addEventListener('click', () => console.log('DISCONNECTED'))
+    m.link.addEventListener('click', () => {
+      const connected = m.element.dataset.connected === 'false'; 
+      account.setAllMenu('user', {
+        info: connected ? 'toto@ign.fr' : 'not connected...'
+      })
+      account.setAllMenu('disconnect', {
+        label: connected ? 'Se déconnecter' : 'Se connecter...',
+        title: connected ? 'Se déconnecter' : 'Se connecter...',
+        data: {
+          connected: connected,
+          parent: {
+            connected: connected
+          }
+        },
+      })
+    })
   })
 }, 100)

@@ -70,26 +70,32 @@ class Menu {
       parent: menu
     })
   }
-  _getMenuInfo(li) {
+  /** Get Menu
+   * @param {string|Element} action
+   */
+  getMenu(action) {
+    let li = action;
+    if (typeof(action) === 'string'){
+      li = this._menuList.querySelector('li[data-action="'+action+'"]');
+    }
     return {
+      parent: this.element,
       element: li,
       type: li.dataset.type,
       link: li.querySelector('a')
     }
   }
-  /** Get Menu
-   * 
+  /** Get all menu in the page
+   * @param {string} action
    */
-  getMenu(action) {
-    const li = this._menuList.querySelector('li[data-action="'+action+'"]');
-    return this._getMenuInfo(li)
-  }
   getAllMenu(action) {
-    const li = document.querySelectorAll('[data-action="' + this._action + '"] li[data-action="'+action+'"]');
-    console.log('[data-action="' + this._action + '"] li[data-action="'+action+'"]');
+    const parent = document.querySelectorAll('[data-action="' + this._action + '"]')
     const info = []
-    li.forEach(l => {
-      info.push(this._getMenuInfo(l))
+    parent.forEach(p => {
+      const li = p.querySelector('li[data-action="'+action+'"]');
+      const m = this.getMenu(li)
+      m.parent = p;
+      info.push(m)
     })
     return info
   }
@@ -97,8 +103,26 @@ class Menu {
    * 
    */
   setMenu(action, options) {
-    const m = this.getMenu(action)
+    let m = action
+    if (typeof(action) === 'string') {
+      m = this.getMenu(action)
+    }
     if (!m) return;
+    // Set data
+    if (options.data) {
+      Object.keys(options.data).forEach(d => {
+        console.log(d)
+        if (d==='parent') {
+          Object.keys(options.data.parent).forEach(dp => {
+            console.log(m.parent)
+            m.parent.dataset[dp] = options.data.parent[dp]
+          })
+        } else {
+          m.element.dataset[d] = options.data[d]
+        }
+      })
+    }
+    // Set menu info
     switch(m.type) {
       case 'description': {
         if (options.label) {
@@ -109,7 +133,21 @@ class Menu {
         }
         break;
       }
+      case 'link': 
+      case 'option': {
+        const a = m.element.querySelector('a');
+        ['title', 'href'].forEach(k => {
+          if (options[k]) a[k] = options[k]
+        })
+        if (options.label) {
+          a.innerText = options.label
+        }
+        break;
+      }
     }
+  }
+  setAllMenu(action, options) {
+    this.getAllMenu(action).forEach(m => this.setMenu(m, options))
   }
   /** Add a new menu
    * 
