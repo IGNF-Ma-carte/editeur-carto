@@ -24,7 +24,7 @@ dialogConnect.querySelector('button.create').addEventListener('click', () => {
   dialogConnect.close()
 })
 
-// dialogConnect.show()
+dialogConnect.show()
 
 /* DEBUG */
 window.dialogConnect = dialogConnect
