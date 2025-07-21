@@ -1,0 +1,180 @@
+import options from 'mcutils/config/config';
+import ol_ext_element from 'ol-ext/util/element'
+
+
+let currentId = 0;
+
+/** Get element Uid
+ * @param {string} type
+ * @param {*} obj
+ */
+function getUid(type, obj) {
+  let id = (type || 'default') + '-' + (++currentId)
+  if (obj) {
+    if (obj._uid) {
+      return obj._uid
+    } 
+    if (obj.getAttribute && obj.getAttribute('id')) {
+      return obj.getAttribute('id')
+    }
+    if (parent.id) {
+      return parent.id
+    }
+    if (obj.setAttribute) {
+      obj.setAttribute('id', id)
+    } else {
+      obj._uid = id;
+    }
+  }
+  return id
+}
+
+/** Menu */
+class Menu {
+  constructor(options) {
+    const nav = this.element = ol_ext_element.create('DIV', {
+      className: 'fr-nav__item',
+      parent: ol_ext_element.create('NAV', {
+        role: 'navigation',
+        className: 'fr-access fr-nav',
+        id: getUid('access'),
+        parent: document.querySelector('header .fr-header__tools-links')
+      })
+    })
+    this._action = options.action;
+    if (options.action) {
+      nav.dataset.action = options.action
+    }
+
+    const idMenu = getUid('access')
+
+    // Button
+    ol_ext_element.create('BUTTON', {
+      text: options.text,
+      title: options.title || options.text,
+      className: 'fr-access__btn fr-nav__btn fr-btn fr-btn--sm fr-btn--icon-left fr-btn--tertiary-no-outline ' + options.icon,
+      'aria-expanded': false, 
+      'aria-controls': idMenu,
+      type: 'button',
+      parent: nav
+    })
+
+    // Menu
+    const menu = ol_ext_element.create('DIV', {
+      className: 'fr-collapse fr-access__menu fr-menu',
+      parent: nav,
+      id: idMenu
+    })
+    this._menuList = ol_ext_element.create('UL', {
+      className: 'fr-menu__list',
+      parent: menu
+    })
+  }
+  _getMenuInfo(li) {
+    return {
+      element: li,
+      type: li.dataset.type,
+      link: li.querySelector('a')
+    }
+  }
+  /** Get Menu
+   * 
+   */
+  getMenu(action) {
+    const li = this._menuList.querySelector('li[data-action="'+action+'"]');
+    return this._getMenuInfo(li)
+  }
+  getAllMenu(action) {
+    const li = document.querySelectorAll('[data-action="' + this._action + '"] li[data-action="'+action+'"]');
+    console.log('[data-action="' + this._action + '"] li[data-action="'+action+'"]');
+    const info = []
+    li.forEach(l => {
+      info.push(this._getMenuInfo(l))
+    })
+    return info
+  }
+  /** SetMenu info
+   * 
+   */
+  setMenu(action, options) {
+    const m = this.getMenu(action)
+    if (!m) return;
+    switch(m.type) {
+      case 'description': {
+        if (options.label) {
+          m.element.querySelector('.fr-description__label').innerText = options.label
+        }
+        if (options.info) {
+          m.element.querySelector('.fr-description__info').innerText = options.info
+        }
+        break;
+      }
+    }
+  }
+  /** Add a new menu
+   * 
+   */
+  addMenu(options) {
+    if (Array.isArray(options)) {
+      options.forEach(o => this.addMenu(o));
+      return ;
+    }
+    const li = ol_ext_element.create('LI', {
+      className: 'fr-menu__item',
+      'data-type': options.type,
+      parent: this._menuList
+    })
+    if (options.action) {
+      li.dataset.action = options.action
+    }
+    switch(options.type) {
+      case 'description': {
+        const desc = ol_ext_element.create('DIV', {
+          className: 'fr-description',
+          id: getUid('description'),
+          parent: li
+        })
+        ol_ext_element.create('DIV', {
+          className: 'fr-description__label fr-text--bold fr-text--sm fr-text-action-high--grey',
+          text: options.label,
+          parent: desc
+        })
+        ol_ext_element.create('DIV', {
+          className: 'fr-description__info fr-text--xs fr-text-mention--grey',
+          text: options.info,
+          parent: desc
+        })
+        break;
+      }
+      case 'link': {
+        ol_ext_element.create('A', {
+          id: getUid('access__link'),
+          className: (options.icon || '') + ' fr-link--icon-left fr-access__link fr-nav__link fr-access__link fr-nav__link',
+          title: options.title || '',
+          text: options.label || 'no label',
+          href: options.href,
+          parent: li
+        })
+        break;
+      }
+      case 'option': {
+        li.classList.add('fr-menu__option')
+        const opt = ol_ext_element.create('DIV', {
+          className: 'fr-option',
+          parent: li
+        })
+        ol_ext_element.create('A', {
+          id: getUid('access__link'),
+          className: (options.icon || '') + ' fr-option__btn fr-btn fr-btn--sm fr-btn--icon-left fr-btn--tertiary',
+          title: options.title || '',
+          text: options.label || 'no label',
+          href: options.href,
+          parent: opt
+        })
+        break;
+      }
+    }
+  }
+}
+
+export { Menu, getUid }

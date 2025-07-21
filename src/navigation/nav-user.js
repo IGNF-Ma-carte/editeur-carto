@@ -1,36 +1,51 @@
-import ol_ext_element from 'ol-ext/util/element'
-import getUid from './getUid'
-
-import html from './nav-user.html?raw'
+import { Menu } from './utils'
 
 // Menu
-const nav = ol_ext_element.create('DIV', {
-  className: 'fr-nav__item',
-  parent: ol_ext_element.create('NAV', {
-    role: 'navigation',
-    className: 'fr-access fr-nav',
-    id: getUid('access'),
-    parent: document.querySelector('header .fr-header__tools-links')
-  })
-})
-
-const idMenu = getUid('access')
-
-// Button
-ol_ext_element.create('BUTTON', {
-  title: 'Mon espace',
+const account = new Menu ({
+  icon: 'fr-icon-account-fill',
+  action: 'connect',
   text: 'Mon espace',
-  className: 'fr-access__btn fr-nav__btn fr-btn fr-btn--sm fr-icon-account-fill fr-btn--icon-left fr-btn--tertiary-no-outline',
-  'aria-expanded': false, 
-  'aria-controls': idMenu,
-  type: 'button',
-  parent: nav
 })
 
-// Menu
-ol_ext_element.create('DIV', {
-  className: 'fr-collapse fr-access__menu fr-menu',
-  parent: nav,
-  html: html,
-  id: idMenu
+/* User menu */
+account.addMenu([
+  {
+    type: 'description',
+    label: 'Nom utilisateur',
+    action: 'user',
+    info: 'nobody@email.com'
+  }, {
+    type: 'link',
+    label: 'Tableau de bord',
+    href: '#',
+    icon : 'fr-icon-dashboard-3-line'
+  }, {
+    type: 'link',
+    label: 'Mon compte',
+    href: '#',
+    icon : 'fr-icon-user-line'
+  }, {
+    type: 'option',
+    action: 'disconnect',
+    label: 'Se déconnecter',
+    title: 'Se déconnecter',
+    href: '#',
+    icon : 'fr-icon-logout-box-r-line'
+  }
+])
+
+// Set user account
+account.setMenu('user', {
+  info: 'adresseutilisateur@email.com'
 })
+
+console.log('Menu disconnect', account.getMenu('disconnect'))
+
+// Get info when ready
+setTimeout(() => {
+  console.log('Menu disconnect', account.getAllMenu('disconnect'))
+  // Disconnect user
+  account.getAllMenu('disconnect').forEach(m => {
+    m.link.addEventListener('click', () => console.log('DISCONNECTED'))
+  })
+}, 100)
