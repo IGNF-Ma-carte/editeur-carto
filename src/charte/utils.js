@@ -1,6 +1,14 @@
-import options from 'mcutils/config/config';
 import ol_ext_element from 'ol-ext/util/element'
 
+/** Menu options
+ * @typedef {Object} MenuOptions
+ * @property {string} type menu type description|link|option
+ * @property {string} label 
+ * @property {string} info information for type description
+ * @property {string} href information for type link
+ * @property {string} icon
+ * @property {string} action 
+ */
 
 let currentId = 0;
 
@@ -28,6 +36,8 @@ function getUid(type, obj) {
   }
   return id
 }
+
+
 
 /** Menu */
 class Menu {
@@ -150,7 +160,7 @@ class Menu {
     this.getAllMenu(action).forEach(m => this.setMenu(m, options))
   }
   /** Add a new menu
-   * 
+   * @param { MenuOptions|Array<MenuOptions> }
    */
   addMenu(options) {
     if (Array.isArray(options)) {
@@ -214,5 +224,7 @@ class Menu {
     }
   }
 }
+
+
 
 export { Menu, getUid }
