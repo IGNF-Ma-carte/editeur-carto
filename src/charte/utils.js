@@ -1,14 +1,5 @@
 import ol_ext_element from 'ol-ext/util/element'
 
-/** Menu options
- * @typedef {Object} MenuOptions
- * @property {string} type menu type description|link|option
- * @property {string} label 
- * @property {string} info information for type description
- * @property {string} href information for type link
- * @property {string} icon
- * @property {string} action 
- */
 
 let currentId = 0;
 
@@ -41,6 +32,15 @@ function getUid(type, obj) {
 
 /** Menu */
 class Menu {
+  /**
+   * @param {Objet} options 
+   *  @param {string} options.type menu type description|link|option
+   *  @param {string} options.label 
+   *  @param {string} options.info information for type description
+   *  @param {string} options.href information for type link
+   *  @param {string} options.icon
+   *  @param {string} options.action 
+   */
   constructor(options) {
     const nav = this.element = ol_ext_element.create('DIV', {
       className: 'fr-nav__item',

@@ -1,19 +1,31 @@
-// DSFR
-import 'dsfrign/dist/core/core.module.min.js';
-import 'dsfrign/dist/component/header/header.module.min.js';
-import 'dsfrign/dist/component/navigation/navigation.module.min.js';
-import 'dsfrign/dist/component/button/button.module.min.js';
-import 'dsfrign/dist/component/modal/modal.module.min.js';
-
-import 'dsfrign/dist/dsfr.min.css';
-import 'dsfrign/dist/utility/icons/icons.min.css';
-
 import charte from './charte.js'
 
 // Set service
-charte.header.setService({
+charte.setService({
   service: 'Cartes.gouv.fr <span class="fr-badge fr-badge--sm fr-badge--green-emeraude">BETA</span>',
   href: '/',
   title: 'Accueil - Cartes.gouv.fr - IGN France',
 })
+charte.setDescription(`Cartes.gouv.fr est développé par l\'Institut national de l\'information géographique et forestière (IGN) 
+  et ses partenaires. Le site s\'appuie sur la Géoplateforme, la nouvelle infrastructure publique, 
+  ouverte et collaborative des données géographiques.`)
 
+charte.addPartner('IGN', 'https://www.ign.fr/', './icon/logo-ign.png', true)
+charte.addPartner('Ministère de la transformation et de la fonction publiques', 'https://www.transformation.gouv.fr/', './icon/logo-transformation-fonction-publiques.png')
+charte.addPartner('Ministère de la transition écologique et de la cohésion des territoires', 'https://www.ecologie.gouv.fr/', './icon/logo-transition-ecologique.png')
+charte.addPartner('Conseil National de l’Information Géolocalisée', 'https://cnig.gouv.fr/', './icon/logo-cnig.png')
+
+charte.addContentLink('https://www.info.gouv.fr/')
+charte.addContentLink('https://service-public.fr/')
+charte.addContentLink('https://legifrance.gouv.fr/')
+charte.addContentLink('https://data.gouv.fr/')
+
+charte.addFooterLink('Plan du site', 'https://cartes.gouv.fr/plan-du-site')
+charte.addFooterLink('Accessibilité : partiellement conforme', 'https://cartes.gouv.fr/accessibilite')
+charte.addFooterLink('Mentions légales', 'https://cartes.gouv.fr/mentions-legales')
+charte.addFooterLink('Données personnelles', 'https://cartes.gouv.fr/donnees-personnelles')
+charte.addFooterLink('Gestion des cookies', '#')
+charte.addFooterLink('Pagetest', '/test')
+charte.addFooterButton('Paramètres d\'affichage', {
+  icon: 'fr-icon-theme-fill'
+})

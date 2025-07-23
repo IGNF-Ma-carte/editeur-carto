@@ -1,6 +1,19 @@
 import ol_ext_element from 'ol-ext/util/element'
 import { getUid } from './utils';
 
+
+// DSFR
+import 'dsfrign/dist/core/core.module.min.js';
+import 'dsfrign/dist/component/header/header.module.min.js';
+import 'dsfrign/dist/component/navigation/navigation.module.min.js';
+import 'dsfrign/dist/component/button/button.module.min.js';
+import 'dsfrign/dist/component/modal/modal.module.min.js';
+
+import 'dsfrign/dist/dsfr.min.css';
+import 'dsfrign/dist/utility/icons/icons.min.css';
+
+import './charte.scss'
+
 /** Header */
 class Header {
   constructor() {
@@ -97,7 +110,10 @@ class Header {
     })
   }
   /** Set service information
-   * @param {*} options
+   * @param {Object} options
+   *  @param {string} [options.service] service name
+   *  @param {string} [options.title]
+   *  @param {string} [options.href] main page url
    */
   setService(options) {
     if (options.service) {
@@ -113,24 +129,130 @@ class Header {
 
 class Footer {
   constructor() {
-    this.element = document.querySelector('footer')
+    this.element = ol_ext_element.create('FOOTER', {
+      id: 'fr-footer',
+      className: 'fr-footer',
+      role: 'contentinfo',
+      parent: document.body
+    })
+    // Container
+    const idContain = getUid('modal')
+    const containBt = ol_ext_element.create('BUTTON', {
+      id: getUid('button'),
+      type: 'button',
+      className: 'fr-btn--close fr-btn btn-more-info',
+      'aria-label': 'plus d\'informations',
+      'title': 'plus d\'informations',
+      'aria-expanded': 'false',
+      'aria-controls': idContain,
+      parent: this.element
+    })
+    containBt.addEventListener('click', () => {
+      const expanded = containBt.getAttribute('aria-expanded') === 'true'
+      containBt.setAttribute('aria-expanded', !expanded);
+      containBt.setAttribute('aria-label', expanded ? 'plus d\'informations' : 'Fermer')
+      containBt.setAttribute('title', expanded ? 'plus d\'informations' : 'Fermer')
+    })
+    const container = this.container = ol_ext_element.create('DIV', {
+      className: 'fr-container',
+      id: idContain,
+      'aria-labelledby': containBt.id,
+      parent: this.element
+    })
+    const body = ol_ext_element.create('DIV', {
+      className: 'fr-footer__body frx-expanded',
+      parent: container
+    })
+    // Brand
+    const brand = ol_ext_element.create('A', {
+      className: 'router-link-active router-link-exact-active',
+      title: 'Retour à l\'accueil',
+      'aria-current': 'page',
+      href: '/',
+      parent: ol_ext_element.create('DIV', {
+        className: 'fr-footer__brand fr-enlarge-link',
+        parent: body
+      })
+    })
+    ol_ext_element.create('P', {
+      className: 'fr-logo',
+      html: 'République<br>Française',
+      parent: brand
+    })
+
+    // Footer content
+    const content = ol_ext_element.create('DIV', {
+      className: 'fr-footer__content',
+      parent: body
+    })
+    this.description = ol_ext_element.create('P', {
+      className: 'fr-footer__content-desc',
+      text: 'Lorem ipsum dolor sit amet',
+      parent: content
+    })
+    this.contentLink = ol_ext_element.create('UL', {
+      className: 'fr-footer__content-list',
+      parent: content
+    })
+
+    // Partners
+    const partners = ol_ext_element.create('DIV', {
+      className: 'fr-footer__partners frx-expanded',
+      parent: container
+    })
+    ol_ext_element.create('H4', {
+      className: 'fr-footer__partners-title',
+      text: 'Nos partenaires',
+      parent: partners
+    })
+    const logos = ol_ext_element.create('DIV', {
+      className: 'fr-footer__partners-logos',
+      parent: partners
+    })
+    this.partnerMainList = ol_ext_element.create('UL', {
+      parent: ol_ext_element.create('DIV', {
+        className: 'ffr-footer__partners-main',
+        parent: logos
+      })
+    })
+    this.partnerList = ol_ext_element.create('UL', {
+      parent: ol_ext_element.create('DIV', {
+        className: 'fr-footer__partners-sub',
+        parent: logos
+      })
+    })
+
+    // Bottom
+    const bottom = ol_ext_element.create('DIV', {
+      className: 'fr-footer__bottom',
+      parent: container
+    })
+    // Links
     this.links = ol_ext_element.create('UL', {
       className: 'fr-footer__bottom-list',
       parent: ol_ext_element.create('DIV', {
         className: 'fr-container--fluid',
-        parent: this.element
+        parent: bottom
       })
     })
-    this.addLink('Plan du site', 'https://cartes.gouv.fr/plan-du-site')
-    this.addLink('Accessibilité : partiellement conforme', 'https://cartes.gouv.fr/accessibilite')
-    this.addLink('Mentions légales', 'https://cartes.gouv.fr/mentions-legales')
-    this.addLink('Données personnelles', 'https://cartes.gouv.fr/donnees-personnelles')
-    this.addLink('Gestion des cookies', '#')
-    this.addLink('Pagetest', '/test')
-    this.addButton('Paramètres d\'affichage', {
-      icon: 'fr-icon-theme-fill'
+    // Copy
+    this.copy = ol_ext_element.create('P', {
+      className: 'frx-expanded',
+      html: `Sauf mention explicite de propriété intellectuelle détenue par des tiers, les contenus de ce site sont proposés sous 
+        <a class="fr-link-licence no-content-after" href="https://github.com/etalab/licence-ouverte/blob/master/LO.md" target="_blank" title="licence etalab-2.0 (nouvelle fenêtre)" rel="noopener noreferrer">
+        licence etalab-2.0
+        </a>`,
+      parent: ol_ext_element.create('DIV', {
+        className: 'fr-footer__bottom-copy',
+        parent: bottom
+      })
     })
+
   }
+  /** Add a bottom link
+   * @param {string} title
+   * @param {string} href
+   */
   addLink(title, href) {
     ol_ext_element.create('A', {
       className: 'fr-footer__bottom-link',
@@ -142,6 +264,11 @@ class Footer {
       })
     })
   }
+  /** Add a bottom button
+   * @param {string} title
+   * @param {Object} options
+   *  @param {string} options.icon
+   */
   addButton(title, options) {
     ol_ext_element.create('BUTTON', {
       className: 'fr-footer__bottom-link fr-link--icon-left fr-px-2v' + (options.icon ? ' '+options.icon : ''),
@@ -152,57 +279,116 @@ class Footer {
       })
     })
   }
+  /**
+   * @param {string} href
+   * @param {string} [title] default use href
+   */
+  addContentLink(href, title) {
+    title = title || href.replace(/^http(s)?:\/\/(www.)?/,'').replace(/\//g, '');
+    return ol_ext_element.create('A', {
+      className: 'fr-footer__content-link',
+      target: '_blank',
+      text: title,
+      href: href,
+      id: 'footer-info-' + title.replace(/\./g, '-'),
+      parent: ol_ext_element.create('LI', {
+        className: 'fr-footer__content-item',
+        parent: this.contentLink
+      })
+    })
+  }
+  /** Add partner logo
+   * @param {string} title
+   * @param {string} url
+   * @param {string} img image src
+   * @param {boolean} [main=false]
+   */
+  addPartner(title, url, img, main) {
+    return ol_ext_element.create('A', {
+      className: 'fr-footer__partners-link',
+      href: url,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      html: ol_ext_element.create('IMG', {
+        className: 'fr-footer__logo',
+        alt: title,
+        src: img
+      }),
+      parent: ol_ext_element.create('LI', {
+        // className: 'fr-footer__content-item',
+        parent: main ? this.partnerMainList : this.partnerList
+      })
+    })
+  }
 }
 
-/* FOOTER
-    container.innerHTML0 =`
-    <div class="fr-header__menu-footer">
-      <div class="fr-footer__brand fr-enlarge-link"><a href="/cartes/" class="router-link-active router-link-exact-active" title="Retour à l’accueil" aria-current="page">
-        <p class="fr-logo">République<br>Française</p></a>
-      </div>
-      <div class="fr-footer__content">
-        <p class="fr-footer__content-desc">
-          Texte optionnel 3 lignes maximum.<br/>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur et vel quam auctor semper. Cras si amet mollis dolor.
-        </p>
-        <ul class="fr-footer__content-list">
-          <li class="fr-footer__content-item">
-            <a title="info.gouv.fr - Nouvelle fenêtre" id="footer__link--info" href="https://www.info.gouv.fr" target="_blank" rel="noopener external" class="fr-footer__content-link" data-fr-js-footer-link-actionee="true">info.gouv.fr</a>
-          </li>
 
-          <li class="fr-footer__content-item">
-            <a title="service-public.fr - Nouvelle fenêtre" id="footer__link--service-public" href="https://www.service-public.fr" target="_blank" rel="noopener external" class="fr-footer__content-link" data-fr-js-footer-link-actionee="true">service-public.fr</a>
-          </li>
-
-          <li class="fr-footer__content-item">
-            <a title="legifrance.gouv.fr - Nouvelle fenêtre" id="footer__link--legifrance" href="https://www.legifrance.gouv.fr" target="_blank" rel="noopener external" class="fr-footer__content-link" data-fr-js-footer-link-actionee="true">legifrance.gouv.fr</a>
-          </li>
-
-          <li class="fr-footer__content-item">
-            <a title="data.gouv.fr - Nouvelle fenêtre" id="footer__link--data" href="https://www.data.gouv.fr" target="_blank" rel="noopener external" class="fr-footer__content-link" data-fr-js-footer-link-actionee="true">data.gouv.fr</a>
-          </li>
-        </ul>
-      </div>
-      <div class="footer-links">
-      </div>
-      <div class="fr-footer__bottom-copy">
-        <p>
-          Sauf mention explicite de propriété intellectuelle détenue par des tiers, les contenus de ce site sont proposés sous 
-          <a class="fr-link-licence no-content-after" href="https://github.com/etalab/licence-ouverte/blob/master/LO.md" target="_blank" title="licence etalab-2.0 (nouvelle fenêtre)" rel="noopener noreferrer">
-            licence etalab-2.0
-          </a>
-        </p>
-      </div>
-    </div>
-`
-*/
 // Page
-const charte = {
-  header: new Header,
-  footer: new Footer
+class Charte {
+  constructor() {
+    this.header = new Header
+    this.footer = new Footer()
+  }
+  _updateFooter() {
+    // Move footer to the header
+    this.header.footer.innerHTML = this.footer.container.innerHTML
+  }
+  /** Set service information
+   * @param {Object} options
+   *  @param {string} [options.service] service name
+   *  @param {string} [options.title]
+   *  @param {string} [options.href] main page url
+   */
+  setService(service, href, title) {
+    this.header.setService(service, href, title)
+  }
+  /** Set service description
+   * @param {string} desc
+   */
+  setDescription(desc) {
+    this.footer.description.innerHTML = desc
+    this._updateFooter()
+  }
+  /** Add partner logo
+   * @param {string} title
+   * @param {string} url
+   * @param {string} img image src
+   * @param {boolean} [main=false]
+   */
+  addPartner(title, url, img, main) {
+    this.footer.addPartner(title, url, img, main)
+    this._updateFooter()
+  }
+  /**
+   * @param {string} href
+   * @param {string} [title] default use href
+   */
+  addContentLink(href, title) {
+    this.footer.addContentLink(href, title)
+    this._updateFooter()
+  }
+  /** Add a bottom link
+   * @param {string} title
+   * @param {string} href
+   */
+  addFooterLink(title, href) {
+    this.footer.addLink(title, href)
+    this._updateFooter()
+  }
+  /** Add a bottom button
+   * @param {string} title
+   * @param {Object} options
+   *  @param {string} options.icon
+   */
+  addFooterButton(title, options) {
+    this.footer.addButton(title, options)
+    this._updateFooter()
+  }
+
 }
 
 // Copy footer > header
-charte.header.footer.querySelector('.fr-header__menu-footer .footer-links').innerHTML = charte.footer.element.innerHTML;
+// charte.header.footer.querySelector('.fr-header__menu-footer .footer-links').innerHTML = charte.footer.element.innerHTML;
 
-export default charte
+// Export singleton
+export default new Charte
