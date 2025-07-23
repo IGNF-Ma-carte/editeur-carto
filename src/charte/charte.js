@@ -1,5 +1,6 @@
 import ol_ext_element from 'ol-ext/util/element'
-import { getUid } from './utils';
+
+import { Menu, getUid } from './utils';
 
 
 // DSFR
@@ -323,15 +324,51 @@ class Footer {
 }
 
 
-// Page
+/** DSFR charte
+ * 
+ */
 class Charte {
   constructor() {
     this.header = new Header
+    this.element = ol_ext_element.create('main', { parent: document.body })
     this.footer = new Footer()
   }
+  /** Get en element in the main (or create it)
+   * @param {string} role
+   * @param {Object} options
+   */
+  getElement(role, options) {
+    options = options || {};
+    options['data-role'] = role;
+    options.parent = this.element;
+    return this.element.querySelector('[data-role="' + role + '"]') || ol_ext_element.create('DIV', options)
+  }
+  /**
+   * @private
+   */
   _updateFooter() {
     // Move footer to the header
     this.header.footer.innerHTML = this.footer.container.innerHTML
+  }
+  /** Get existing or create menu 
+   * @param {Objet} options 
+   *  @param {string} options.type menu type description|link|option
+   *  @param {string} options.label 
+   *  @param {string} options.info information for type description
+   *  @param {string} options.href information for type link
+   *  @param {string} options.icon
+   *  @param {string} options.action 
+   */
+  getHeaderMenu(options) {
+    options = options || {}
+    // Existing menu
+    if (options.action) {
+      const menu = this.header.element.querySelector('[data-action="' + options.action + '"]')
+      if (menu) return menu
+    }
+    // Create new one
+    options.parent = this.header.tools
+    return new Menu(options)
   }
   /** Set service information
    * @param {Object} options

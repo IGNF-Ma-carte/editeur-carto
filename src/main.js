@@ -1,7 +1,4 @@
-// Import des fichiers CSS
 import './version'
-
-
 import './charte/dsfr.js'
 import './charte/navigation.js'
 

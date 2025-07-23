@@ -1,12 +1,13 @@
-import { Menu } from './utils'
+import charte from './charte'
 
 // Menu
-const account = new Menu ({
+const service = charte.getHeaderMenu ({
   icon: 'fr-icon-menu-fill',
+  action: 'services',
   text: 'Services',
 })
 
-account.addMenu([
+service.addMenu([
   {
     type: 'link',
     label: 'Explorer les cartes',

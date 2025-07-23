@@ -1,12 +1,13 @@
-import { Menu } from './utils'
+import charte from './charte'
 
 // Menu
-const account = new Menu ({
+const help = charte.getHeaderMenu ({
   icon: 'fr-icon-question-fill',
+  action: 'help',
   text: 'Aide',
 })
 
-account.addMenu([
+help.addMenu([
   {
     type: 'link',
     label: 'Questions fréquentes',

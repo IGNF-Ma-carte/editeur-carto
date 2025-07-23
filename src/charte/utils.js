@@ -28,8 +28,6 @@ function getUid(type, obj) {
   return id
 }
 
-
-
 /** Menu */
 class Menu {
   /**
@@ -48,7 +46,7 @@ class Menu {
         role: 'navigation',
         className: 'fr-access fr-nav',
         id: getUid('access'),
-        parent: document.querySelector('header .fr-header__tools-links')
+        parent: options.parent
       })
     })
     this._action = options.action;
@@ -82,8 +80,9 @@ class Menu {
   }
   /** Get Menu
    * @param {string|Element} action
+   * @private
    */
-  getMenu(action) {
+  _getMenu(action) {
     let li = action;
     if (typeof(action) === 'string'){
       li = this._menuList.querySelector('li[data-action="'+action+'"]');
@@ -95,27 +94,28 @@ class Menu {
       link: li.querySelector('a')
     }
   }
-  /** Get all menu in the page
+  /** Get all menu in the page for an action
    * @param {string} action
+   * @returns {Array<Element>}
    */
-  getAllMenu(action) {
-    const parent = document.querySelectorAll('[data-action="' + this._action + '"]')
+  getMenu(action) {
+    const parent = document.querySelectorAll('nav[role="navigation"] [data-action="' + this._action + '"]')
     const info = []
     parent.forEach(p => {
       const li = p.querySelector('li[data-action="'+action+'"]');
-      const m = this.getMenu(li)
+      const m = this._getMenu(li)
       m.parent = p;
       info.push(m)
     })
     return info
   }
   /** SetMenu info
-   * 
+   * @private
    */
-  setMenu(action, options) {
+  _setMenu(action, options) {
     let m = action
     if (typeof(action) === 'string') {
-      m = this.getMenu(action)
+      m = this._getMenu(action)
     }
     if (!m) return;
     // Set data
@@ -156,8 +156,17 @@ class Menu {
       }
     }
   }
-  setAllMenu(action, options) {
-    this.getAllMenu(action).forEach(m => this.setMenu(m, options))
+  /** SetMenu info
+   * @param {string} action
+   * @param {Object} options
+   *  @param {string} options.title
+   *  @param {string} options.href
+   *  @param {string} options.label
+   *  @param {string} options.info
+   *  @param {Object} options.data
+   */
+  setMenu(action, options) {
+    this.getMenu(action).forEach(m => this._setMenu(m, options))
   }
   /** Add a new menu
    * @param { MenuOptions|Array<MenuOptions> }

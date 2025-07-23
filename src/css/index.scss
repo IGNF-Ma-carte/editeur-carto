@@ -6,7 +6,7 @@ main {
   overflow: hidden;
 }
 
-#map {
+[data-role="map"] {
   flex: 1; // fills the remaining space inside <main>
   width: 100%;
 }

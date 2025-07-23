@@ -1,9 +1,9 @@
-import { Menu } from './utils'
+import charte from './charte'
 
 import './nav-user.scss'
 
 // Menu
-const account = new Menu ({
+const account = charte.getHeaderMenu ({
   icon: 'fr-icon-account-fill',
   action: 'connect',
   text: 'Mon espace',
@@ -43,19 +43,16 @@ account.setMenu('user', {
   info: 'adresseutilisateur@email.com'
 })
 
-console.log('Menu disconnect', account.getMenu('disconnect'))
-
 // Get info when ready
 setTimeout(() => {
-  console.log('Menu disconnect', account.getAllMenu('disconnect'))
   // Connect / disconnect user
-  account.getAllMenu('disconnect').forEach(m => {
+  account.getMenu('disconnect').forEach(m => {
     m.link.addEventListener('click', () => {
       const connected = m.element.dataset.connected === 'false'; 
-      account.setAllMenu('user', {
+      account.setMenu('user', {
         info: connected ? 'toto@ign.fr' : 'not connected...'
       })
-      account.setAllMenu('disconnect', {
+      account.setMenu('disconnect', {
         label: connected ? 'Se déconnecter' : 'Se connecter...',
         title: connected ? 'Se déconnecter' : 'Se connecter...',
         data: {
@@ -67,4 +64,4 @@ setTimeout(() => {
       })
     })
   })
-}, 100)
+}, 100 /* ready */)
