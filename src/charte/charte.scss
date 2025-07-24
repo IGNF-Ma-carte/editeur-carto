@@ -46,6 +46,7 @@ footer {
     &[aria-expanded="false"] {
       position: absolute;
       right: 0;
+      margin-top: 0.25rem;
     }
     &[aria-expanded="false"]:after {
       content: '';
@@ -53,6 +54,9 @@ footer {
     }
     &[aria-expanded="false"] ~ div .frx-expanded{
       display: none;
+    }
+    &[aria-expanded="false"] ~ div .fr-footer__bottom-list {
+      padding: .125rem 0;
     }
   }
 
