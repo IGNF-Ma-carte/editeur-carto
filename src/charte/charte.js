@@ -18,7 +18,11 @@ import './charte.scss'
 /** Header */
 class Header {
   constructor() {
-    const header = document.querySelector('header');
+    const header = document.querySelector('header') || ol_ext_element.create('HEADER', {
+      role: 'banner',
+      className: 'fr-header fr-header--compact',
+      parent: document.body
+    });
     this.element = header;
     // Wrapper
     const wrapper = ol_ext_element.create('DIV', {
