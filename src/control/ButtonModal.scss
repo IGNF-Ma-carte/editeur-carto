@@ -13,6 +13,7 @@ button[id^=GPbuttonModalPicto-][aria-pressed=true]+dialog {
 
 .position-container-top-left {
   .gpf-widget-button:has(>.gpf-btn-icon[aria-pressed=true]):after {
-    top: 44px;
+    // top: 44px;
+    top:2px;
   }
 }

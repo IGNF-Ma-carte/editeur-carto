@@ -18,6 +18,11 @@ const carte = new Carte({
 })
 
 carte.on('read', () => {
+  // Transforme le bouton de LayerSwitcher
+  let switcherBtn = document.querySelector("[id^=GPshowLayersListPicto]")
+  console.log(switcherBtn)
+  switcherBtn.classList.remove('fr-btn--tertiary', 'gpf-btn--tertiary')
+  switcherBtn.classList.add('gpf-btn--primary')
   /* Do something */
 })
 
