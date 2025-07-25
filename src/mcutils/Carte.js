@@ -28,6 +28,8 @@ class GPPCarte extends Carte {
       'title',
       // 'attribution',
       // 'layerSwitcher',
+      'mousePosition',
+      'legend',
       'permalink',
       'scaleLine',
       'ctrlbar',
