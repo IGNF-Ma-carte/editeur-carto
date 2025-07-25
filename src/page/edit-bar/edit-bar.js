@@ -27,14 +27,10 @@ let vector = new VectorStyle({
 
 carte.on('read', () => {
   carte.getMap().addLayer(vector);
-  carte.getMap().addLayer(vector.getLayer());
-  carte.getControl('layerSwitcher').addLayer(vector.getLayer())
-  console.log("VectorStyle = VectorLayer ?", vector instanceof VectorLayer)
-  console.log("LayerSwithcer = ol.Control ?", carte.getControl('layerSwitcher') instanceof Control)
   carte.getSelect().on('select', (e) => console.log(e))
 })
 
-// Bar ajout de donnée
+// Barre ajout de donnée
 let catalogue = new CustomButton({
   className: 'button-hint',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'ri-book-open-line'],
@@ -159,15 +155,13 @@ let drawToggle = new CustomToggle({
 
 let a = new CustomToggle({
   className: 'button-hint ol-custom-button dsfr-btn',
-  html: '<i class="fr-mr-1w ri-1x ri-map-pin-line"></i>Mesurer une distance',
+  html: '<i class="fr-mr-1w ri-1x ri-ruler-line"></i>Mesurer une distance',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
-  // interaction: drawPointInteraction,
 });
 let b = new CustomToggle({
   className: 'button-hint ol-custom-button dsfr-btn',
   html: '<i class="fr-mr-1w ri-1x ri-guide-line"></i>Mesurer une surface',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
-  // interaction: drawLineStringInteraction,
 });
 let c = new CustomToggle({
   className: 'button-hint ol-custom-button dsfr-btn',
@@ -175,7 +169,6 @@ let c = new CustomToggle({
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
   // html:'Point',
   // buttonClasses: ['fr-btn', 'fr-icon-map-pin-2-line','fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
-  // interaction: drawPolygonInteraction,
 });
 
 let measureBar = new CustomBar({
@@ -198,7 +191,6 @@ let measureToggle = new CustomToggle({
 });
 
 // Barre d'interaction
-
 let interactionBar = new CustomBar({
   toggleOne: true,
   controls: [
@@ -207,7 +199,7 @@ let interactionBar = new CustomBar({
   ]
 })
 
-// Bar d'édition
+// Barre d'édition
 let editDataBar = new CustomBar({
   controls: [
     selectToggle,
@@ -215,7 +207,7 @@ let editDataBar = new CustomBar({
   ]
 })
 
-// Bar principale
+// Barre principale
 let mainbar = new CustomBar({
   className: 'ol-bar--separator',
   toggleOne: true,
