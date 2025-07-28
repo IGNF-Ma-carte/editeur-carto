@@ -21,11 +21,16 @@ const carte = new Carte({
 })
 
 carte.on('read', () => {
+  let switcher = carte.getControl('layerSwitcher');
   // Transforme le bouton de LayerSwitcher
   let switcherBtn = document.querySelector("[id^=GPshowLayersListPicto]")
-  console.log(switcherBtn)
   switcherBtn.classList.remove('fr-btn--tertiary', 'gpf-btn--tertiary')
   switcherBtn.classList.add('gpf-btn--primary')
+  switcherBtn.parentElement.style = ''
+  switcher.on("change:collapsed", (e) => {
+    setTimeout(() => switcherBtn.parentElement.style = '', 1)
+  })
+
   /* Do something */
 })
 

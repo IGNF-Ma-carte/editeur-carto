@@ -17,10 +17,13 @@ class GPPCarte extends Carte {
    */
   constructor(options) {
     super(options);
-    
+
     // Remove ScaleLine from canvas
     this.getControl('scaleLine').element.style.visibility = ''
-    this.getMap().render()
+    this.getMap().render();
+    const self = this;
+
+    this.selectedLayer = null;
 
     // Remove controls      
     const keyToExcludes = [
@@ -51,7 +54,23 @@ class GPPCarte extends Carte {
           collapsed: true,
           panel: true,
           counter: true,
-          allowEdit: true
+          allowEdit: true,
+          advancedTools: [
+            // icone par defaut
+            {
+              label: 'Sélectionner la couche',
+              icon: 'fr-icon-cursor-line',
+              cb: (e, instance, layer, options) => {
+                self.selectedLayer = layer;
+                self.dispatchEvent({
+                  type: 'selected:layer:change',
+                  layer: layer,
+                  options: options,
+                })
+                console.log(e, instance, layer, options);
+              }
+            },
+          ]
         }
       }),
       search: new SearchEngine({
@@ -88,7 +107,7 @@ class GPPCarte extends Carte {
 
   /** Carte is ready
    */
-  setReady = ()=> {
+  setReady = () => {
     Carte.prototype.setReady.call(this);
     // Remove ScaleLine from canvas
     this.getControl('scaleLine').element.style.visibility = ''

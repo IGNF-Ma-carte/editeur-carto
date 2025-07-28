@@ -3,10 +3,12 @@ import './charte/dsfr.js'
 import './charte/navigation.js'
 
 import carte from './carte.js'
-import './page/menu.js'
+// import './page/menu/menu.js'
 
 import './page/connect.js'
 import './page/edit-bar/edit-bar.js'
+import './page/step-bar/step-bar.js'
+import './page/file-bar/file-bar.js'
 
 // Custom CSS
 import 'remixicon/fonts/remixicon.css'

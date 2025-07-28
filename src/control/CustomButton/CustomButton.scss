@@ -1,6 +1,6 @@
 .ol-custom-button > button {
   line-height: unset;
-  font-weight: unset;
+  font-weight: 500;
 
   &,
   &:hover,
@@ -94,3 +94,58 @@
       calc(100% - 0.375rem) 0;
   }
 }
+
+.ol-bar.ol-top .ol-custom-button > button {
+  &[aria-label]:hover::after {
+  transform: translateX(-16px) translateY(40px);
+
+    // Flèche vers le haut
+    background-image: conic-gradient(
+        from 146.31deg at 50% 0%,
+        transparent 0deg,
+        var(--background-overlap-grey) 0deg,
+        var(--background-overlap-grey) 67.38deg,
+        transparent 67.38deg
+      ),
+      conic-gradient(
+        from 146.31deg at 50% 10%,
+        transparent 0deg,
+        var(--border-default-grey) 0deg,
+        var(--border-default-grey) 67.38deg,
+        transparent 67.38deg
+      ),
+      linear-gradient(to bottom, var(--border-default-grey), var(--border-default-grey)),
+      linear-gradient(90deg, var(--background-overlap-grey), var(--background-overlap-grey));
+    background-position:
+      16px 0.125rem,
+      16px 0,
+      0 0.45rem,
+      0 0.5rem;
+    background-size:
+      0.5rem 0.5rem,
+      0.5rem 0.5rem,
+      100% 1px,
+      100%;
+    background-repeat: no-repeat;
+    padding-top: 1rem;
+    padding-left: 0.5rem;
+    margin-top: 0.125rem;
+  }
+}
+
+.ol-control.ol-control button {
+    &:focus {
+      outline-color: #0a76f6;
+      outline-offset: -2px;
+      outline-style: solid;
+      outline-width: 2px;
+    }
+
+    &:focus:not(:focus-visible) {
+      outline-style: none;
+    }
+
+    &:focus:focus-visible {
+      outline-style: solid;
+    }
+  }

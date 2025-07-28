@@ -31,8 +31,6 @@ class CustomBar extends Bar {
     options = options || {};
     options.className = options.className + ' ol-custom-bar'
 
-    console.log(options)
-
     super(options);
   }
 }

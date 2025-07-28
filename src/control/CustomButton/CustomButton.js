@@ -30,7 +30,7 @@ const logger = Logger.getLogger("CustomButton");
 class CustomButton extends Button {
   constructor(options) {
     options = options || {};
-    options.className = options.className + ' ol-custom-button' 
+    options.className = options.className + ' ol-custom-button'
 
     super(options);
 
@@ -41,7 +41,7 @@ class CustomButton extends Button {
     }
 
     // Ajoute des attributs supplémentaires au bouton
-    options.buttonAttributes = options.buttonAttributes ? options.buttonAttributes : {};                              
+    options.buttonAttributes = options.buttonAttributes ? options.buttonAttributes : {};
     for (let attr in options.buttonAttributes) {
       this.button_.setAttribute(attr, options.buttonAttributes[attr]);
     }
