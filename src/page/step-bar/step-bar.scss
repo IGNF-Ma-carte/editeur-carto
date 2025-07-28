@@ -1,0 +1,20 @@
+.ol-control.ol-bar.ol-custom-bar .ol-custom-toggle.action-button.ol-active {
+  &.ol-active > button,
+  > button {
+    &,
+    &:hover,
+    &:active {
+      background-color: var(--background-open-blue-france);
+      --hover: var(--background-open-blue-france-hover);
+      --active: var(--background-open-blue-france-active);
+    }
+
+    &:hover {
+      background-color: var(--hover-tint);
+    }
+
+    &:active {
+      background-color: var(--active-tint);
+    }
+  }
+}

@@ -39,7 +39,7 @@ let catalogue = new CustomButton({
     'aria-label': "Importer une donnée de cartes.gouv",
   },
   handleClick: function () {
-    info("Center: " + carte.map.getView().getCenter() + " - zoom: " + carte.map.getView().getZoom());
+    info("Ajout de donnée cartes.gouv");
   }
 });
 
@@ -51,7 +51,7 @@ let flux = new CustomButton({
     'aria-label': "Importer un flux",
   },
   handleClick: function () {
-    info("Center: " + carte.map.getView().getCenter() + " - zoom: " + carte.map.getView().getZoom());
+    info("Ajout d'un flux");
   }
 });
 
@@ -63,7 +63,7 @@ let file = new CustomButton({
     'aria-label': "Importer une donnée locale",
   },
   handleClick: function () {
-    info("Center: " + carte.map.getView().getCenter() + " - zoom: " + carte.map.getView().getZoom());
+    info("Ajout de données locale");
   }
 });
 
@@ -86,8 +86,7 @@ let selectToggle = new CustomToggle({
   interaction: carte.getSelect(),
   active: true,
   onToggle: function () {
-    carte.getSelect().getFeatures().clear()
-    console.log(carte.getSelect().getActive())
+    carte.getSelect().getFeatures().clear();
   }
 });
 
@@ -120,16 +119,14 @@ let point = new CustomToggle({
 });
 let line = new CustomToggle({
   className: 'button-hint ol-custom-button dsfr-btn',
-  html: '<i class="fr-mr-1w ri-1x ri-guide-line"></i>Ligne',
-  buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
+  html: 'Ligne',
+  buttonClasses: ['fr-btn', 'fr-icon-ign-dessiner-trace-line', 'fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
   interaction: drawLineStringInteraction,
 });
 let polygon = new CustomToggle({
   className: 'button-hint ol-custom-button dsfr-btn',
-  html: '<i class="fr-mr-1w ri-1x ri-shape-line"></i>Surface',
-  buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
-  // html:'Point',
-  // buttonClasses: ['fr-btn', 'fr-icon-map-pin-2-line','fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
+  html: 'Surface',
+  buttonClasses: ['fr-btn', 'fr-icon-ign-surface', 'fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
   interaction: drawPolygonInteraction,
 });
 
@@ -153,21 +150,21 @@ let drawToggle = new CustomToggle({
 
 // Interaction de mesure
 
-let a = new CustomToggle({
+let distanceMeasure = new CustomToggle({
   className: 'button-hint ol-custom-button dsfr-btn',
   html: '<i class="fr-mr-1w ri-1x ri-ruler-line"></i>Mesurer une distance',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
 });
-let b = new CustomToggle({
+let surfaceMeasure = new CustomToggle({
   className: 'button-hint ol-custom-button dsfr-btn',
-  html: '<i class="fr-mr-1w ri-1x ri-guide-line"></i>Mesurer une surface',
-  buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
+  html: 'Mesurer une surface',
+  buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'fr-icon-ign-surface', 'fr-btn--icon-left'],
 });
-let c = new CustomToggle({
+let isochrone = new CustomToggle({
   className: 'button-hint ol-custom-button dsfr-btn',
   html: '<i class="fr-mr-1w ri-1x ri-map-pin-5-line"></i>Mesurer une isochrone',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
-  // html:'Point',
+  // html:'Mesurer une isochrone',
   // buttonClasses: ['fr-btn', 'fr-icon-map-pin-2-line','fr-btn--tertiary-no-outline', 'fr-btn--icon-left'],
 });
 
@@ -175,19 +172,16 @@ let measureBar = new CustomBar({
   className: 'ol-bar--separator',
   toggleOne: true,
   controls: [
-    a,
-    b,
-    c
+    distanceMeasure,
+    surfaceMeasure,
+    isochrone
   ]
 })
 
 let measureToggle = new CustomToggle({
   className: 'button-hint ol-custom-button',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'ri-ruler-line'],
-  handleClick: function () {
-    info("Center: " + carte.map.getView().getCenter() + " - zoom: " + carte.map.getView().getZoom());
-  },
-  bar:measureBar
+  bar: measureBar
 });
 
 // Barre d'interaction

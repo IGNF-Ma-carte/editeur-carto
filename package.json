@@ -19,8 +19,8 @@
     "vite": "^7.0.4"
   },
   "dependencies": {
-    "dsfrign": "https://github.com/MatRouillard/dsfr/releases/download/v1.14.2/ignf-dsfr-v1.14.2.tgz",
-    "geopf-extensions-openlayers": "./geopf-extensions-openlayers-1.0.0-beta.4-398.tgz",
+    "dsfrign": "https://github.com/MatRouillard/dsfr/releases/download/v1.14.3/ignf-dsfr-v1.14.3.tgz",
+    "geopf-extensions-openlayers": "./geopf-extensions-openlayers-1.0.0-beta.5-418.tgz",
     "mcutils": "git+https://github.com/IGNF-Ma-carte/mcutils#v4.4.0",
     "remixicon": "^4.6.0"
   }

@@ -43,16 +43,16 @@
   .GPmapHandle:has(> .GPmapHandlePicto[aria-pressed='true'])::after {
     display: none;
   }
-  
+
   .GPmapHandle > .gpf-panel {
-    left:auto;
-    top:4px;
+    left: auto;
+    top: 4px;
   }
 }
 
 .GPmapHandle > .gpf-panel {
-  left:auto;
-  top:4px;
+  left: auto;
+  top: 4px;
   min-width: 233px;
   max-width: 377px;
 
@@ -68,20 +68,21 @@
     padding: 1px 0;
   }
 
-  ul, li {
-    list-style-type:none;
-    padding:0;
-    margin:0;
+  ul,
+  li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
   }
 
   .map-item {
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: .875rem;
+    font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5rem;
-    width:100%;
+    width: 100%;
     padding: 0.5rem 1rem;
     height: auto;
     min-height: auto;
