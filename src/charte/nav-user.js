@@ -1,5 +1,4 @@
 import charte from './charte'
-
 import './nav-user.scss'
 
 // Menu

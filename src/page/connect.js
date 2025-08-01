@@ -17,6 +17,7 @@ document.body.dataset.disconnected = '';
 
 dialogConnect.querySelector('.disconnected a').addEventListener('click', (e) => {
   delete document.body.dataset.disconnected;
+  dialogConnect.querySelector('.connected button.create').focus();
   e.preventDefault();
   e.stopPropagation();
 });
@@ -24,7 +25,8 @@ dialogConnect.querySelector('button.create').addEventListener('click', () => {
   dialogConnect.close()
 })
 
-dialogConnect.show()
+dialogConnect.showModal()
+// dialogConnect.show()
 
 /* DEBUG */
 window.dialogConnect = dialogConnect

@@ -13,7 +13,10 @@ import CustomToggle from '../../control/CustomToggle/CustomToggle.js'
 import CustomTextButton from '../../control/CustomTextButton/CustomTextButton.js';
 import openAction from './actions.js';
 
+// Variables utiles
+let title = carte.get('title');
 
+// Actions
 let createNewMap = function (e) {
   window.open(import.meta.env.BASE_URL, '_blank').focus();
 }
@@ -183,11 +186,17 @@ let fileToggle = new CustomToggle({
 
 // Map title
 let mapTitle = new CustomTextButton({
-  html: 'Carte avec un titre beaucoup trop long pour passer dans la div',
+  html: title || 'Carte sans titre',
   textAttributes: {
-    title: 'Carte avec un titre beaucoup trop long pour passer dans la div',
+    title: title || 'Carte sans titre',
   },
   className: 'ol-custom-text-button fr-px-2w fr-py-1w fr-text map-title'
+})
+
+// Mise à jour du titre
+carte.on('change:title', (e) => {
+  mapTitle.setHtml(e.target.get(e.key))
+  mapTitle.setTitle(e.target.get(e.key))
 })
 
 let filebar = new CustomBar({

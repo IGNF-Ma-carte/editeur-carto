@@ -20,6 +20,8 @@ const carte = new Carte({
   url: import.meta.env.BASE_URL + 'carte/template.carte'
 })
 
+// carte.set('title', 'Titre')
+
 carte.on('read', () => {
   let switcher = carte.getControl('layerSwitcher');
   // Transforme le bouton de LayerSwitcher

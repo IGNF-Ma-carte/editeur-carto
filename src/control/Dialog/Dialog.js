@@ -23,6 +23,17 @@ class Dialog {
     // Titre et contenu de la modale
     this.dialogTitle = this.dialog.querySelector('#main-modal__title');
     this.dialogContent = this.dialog.querySelector('#main-modal__content');
+
+    this.onDisclose = typeof dialogOptions.onDisclose === 'function' ? dialogOptions.onDisclose : () => { };
+
+    this.dialog.addEventListener('dsfr.disclose', this.onDisclose);
+    this.dialog.addEventListener('dsfr.conceal', (e) => {
+      this.dialog.removeEventListener('dsfr.disclose', this.onDisclose);
+    }, { once: true });
+  }
+
+  getDialog() {
+    return this.dialog;
   }
 
   getId() {
@@ -131,6 +142,13 @@ class Dialog {
     this.dialogFooter = footer;
   }
 
+  /**
+   * Ferme le dialog en simulant un click sur le bouton de fermeture
+   */
+  close() {
+    this.closeBtn.click();
+  }
+
   getFooterButtons() {
     return this.dialogFooter
       ? Array.from(this.dialogFooter.querySelectorAll('button'))
@@ -140,6 +158,15 @@ class Dialog {
   getFooterButton(index) {
     const buttons = this.getFooterButtons();
     return buttons[index] || null;
+  }
+
+  setOnDisclose(onDisclose) {
+    console.log(onDisclose)
+    this.dialog.removeEventListener('dsfr.disclose', this.onDisclose);
+    if (typeof onDisclose === 'function') {
+      this.onDisclose = onDisclose;
+      this.dialog.addEventListener('dsfr.disclose', this.onDisclose);
+    }
   }
 }
 

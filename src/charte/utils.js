@@ -12,7 +12,7 @@ function getUid(type, obj) {
   if (obj) {
     if (obj._uid) {
       return obj._uid
-    } 
+    }
     if (obj.getAttribute && obj.getAttribute('id')) {
       return obj.getAttribute('id')
     }
@@ -26,6 +26,21 @@ function getUid(type, obj) {
     }
   }
   return id
+}
+
+function htmlToNode(html) {
+  const template = document.createElement('template');
+  template.innerHTML = html;
+  const nNodes = template.content.childNodes.length;
+  if (nNodes !== 1) {
+    throw new Error(
+      `html parameter must represent a single node; got ${nNodes}. ` +
+      'Note that leading or trailing spaces around an element in your ' +
+      'HTML, like " <img/> ", get parsed as text nodes neighbouring ' +
+      'the element; call .trim() on your input to avoid this.'
+    );
+  }
+  return template.content.firstChild;
 }
 
 /** Menu */
@@ -61,7 +76,7 @@ class Menu {
       text: options.text,
       title: options.title || options.text,
       className: 'fr-access__btn fr-nav__btn fr-btn fr-btn--sm fr-btn--icon-left fr-btn--tertiary-no-outline ' + options.icon,
-      'aria-expanded': false, 
+      'aria-expanded': false,
       'aria-controls': idMenu,
       type: 'button',
       parent: nav
@@ -84,8 +99,8 @@ class Menu {
    */
   _getMenu(action) {
     let li = action;
-    if (typeof(action) === 'string'){
-      li = this._menuList.querySelector('li[data-action="'+action+'"]');
+    if (typeof (action) === 'string') {
+      li = this._menuList.querySelector('li[data-action="' + action + '"]');
     }
     return {
       parent: this.element,
@@ -102,7 +117,7 @@ class Menu {
     const parent = document.querySelectorAll('nav[role="navigation"] [data-action="' + this._action + '"]')
     const info = []
     parent.forEach(p => {
-      const li = p.querySelector('li[data-action="'+action+'"]');
+      const li = p.querySelector('li[data-action="' + action + '"]');
       const m = this._getMenu(li)
       m.parent = p;
       info.push(m)
@@ -114,7 +129,7 @@ class Menu {
    */
   _setMenu(action, options) {
     let m = action
-    if (typeof(action) === 'string') {
+    if (typeof (action) === 'string') {
       m = this._getMenu(action)
     }
     if (!m) return;
@@ -122,7 +137,7 @@ class Menu {
     if (options.data) {
       Object.keys(options.data).forEach(d => {
         console.log(d)
-        if (d==='parent') {
+        if (d === 'parent') {
           Object.keys(options.data.parent).forEach(dp => {
             console.log(m.parent)
             m.parent.dataset[dp] = options.data.parent[dp]
@@ -133,7 +148,7 @@ class Menu {
       })
     }
     // Set menu info
-    switch(m.type) {
+    switch (m.type) {
       case 'description': {
         if (options.label) {
           m.element.querySelector('.fr-description__label').innerText = options.label
@@ -143,7 +158,7 @@ class Menu {
         }
         break;
       }
-      case 'link': 
+      case 'link':
       case 'option': {
         const a = m.element.querySelector('a');
         ['title', 'href'].forEach(k => {
@@ -174,7 +189,7 @@ class Menu {
   addMenu(options) {
     if (Array.isArray(options)) {
       options.forEach(o => this.addMenu(o));
-      return ;
+      return;
     }
     const li = ol_ext_element.create('LI', {
       className: 'fr-menu__item',
@@ -184,7 +199,7 @@ class Menu {
     if (options.action) {
       li.dataset.action = options.action
     }
-    switch(options.type) {
+    switch (options.type) {
       case 'description': {
         const desc = ol_ext_element.create('DIV', {
           className: 'fr-description',
@@ -236,4 +251,4 @@ class Menu {
 
 
 
-export { Menu, getUid }
+export { Menu, getUid, htmlToNode }

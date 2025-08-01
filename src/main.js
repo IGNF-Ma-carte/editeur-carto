@@ -19,3 +19,6 @@ import './css/control.scss'
 /* DEBUG */
 window.carte = carte
 /**/
+
+import dialog from './dialog.js'
+dialog.getDialog().addEventListener('dsfr.disclose', (e) => { console.log(e) })
