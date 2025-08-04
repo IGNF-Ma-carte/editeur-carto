@@ -16,31 +16,21 @@ import VectorStyle from 'mcutils/layer/VectorStyle.js'
 import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 
+import openAction from '../../actions/actions.js'
+
 import './edit-bar.scss'
 import { Control } from 'ol/control.js'
-
-// Couche de test
-let vector = new VectorStyle({
-  type: 'Vector',
-  title: 'Vecteur', source: new VectorSource()
-})
-
-carte.on('read', () => {
-  carte.getMap().addLayer(vector);
-  carte.getSelect().on('select', (e) => console.log(e))
-})
 
 // Barre ajout de donnée
 let catalogue = new CustomButton({
   className: 'button-hint',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'ri-book-open-line'],
   buttonAttributes: {
+    'data-action': 'import-catalog',
     title: "Importer une donnée de cartes.gouv",
     'aria-label': "Importer une donnée de cartes.gouv",
   },
-  handleClick: function () {
-    info("Ajout de donnée cartes.gouv");
-  }
+  handleClick: openAction,
 });
 
 let flux = new CustomButton({
@@ -59,12 +49,11 @@ let file = new CustomButton({
   className: 'button-hint',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'ri-file-upload-line'],
   buttonAttributes: {
+    'data-action': 'import-local',
     title: "Importer une donnée locale",
     'aria-label': "Importer une donnée locale",
   },
-  handleClick: function () {
-    info("Ajout de données locale");
-  }
+  handleClick: openAction
 });
 
 let addDataBar = new CustomBar({
@@ -107,7 +96,8 @@ let draws = [drawPointInteraction, drawLineStringInteraction, drawPolygonInterac
 
 draws.forEach(draw => {
   draw.on('drawend', e => {
-    vector.getSource().addFeature(e.feature);
+    // Code à modifier lorsqu'il y'aura une sélection des couches
+    // vector.getSource().addFeature(e.feature);
   })
 })
 

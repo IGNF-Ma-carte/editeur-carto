@@ -1,0 +1,47 @@
+@use 'dsfrign/src/module/media-query/mixin/respond-from' as rf;
+
+.ign-panel {
+  margin:0;
+  padding:0;
+  width: 380px;
+  border:none;
+  top: 120px;
+  bottom:0;
+
+  &.ign-panel__left {
+    left:0.5rem;
+  }
+
+  &.ign-panel__right {
+    right:4rem;
+    left:auto;
+  }
+
+  &__header {
+    padding: 0.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+
+    color: var(--text-action-high-blue-france);
+    background-color: var(--background-open-blue-france);
+    
+    .ign-panel__title {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .ign-panel__buttons {
+      margin: 0;
+
+      & > button {
+        margin:0
+      }
+    }
+  }
+
+  &__body {
+    padding: 0 1rem;
+  }
+}

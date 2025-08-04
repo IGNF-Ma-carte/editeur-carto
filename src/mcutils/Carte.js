@@ -1,9 +1,9 @@
 import Carte from 'mcutils/Carte';
 import {
   GeoportalZoom,
-  LayerSwitcher,
   SearchEngine,
 } from 'geopf-extensions-openlayers';
+import switcher from './layerSwitcher';
 
 /** GPP Carte overwrite Carte options / controls
  */
@@ -48,31 +48,7 @@ class GPPCarte extends Carte {
     }
     // Set GPP controls
     const controls = {
-      layerSwitcher: new LayerSwitcher({
-        options: {
-          position: 'top-right',
-          collapsed: true,
-          panel: true,
-          counter: true,
-          allowEdit: true,
-          advancedTools: [
-            // icone par defaut
-            {
-              label: 'Sélectionner la couche',
-              icon: 'fr-icon-cursor-line',
-              cb: (e, instance, layer, options) => {
-                self.selectedLayer = layer;
-                self.dispatchEvent({
-                  type: 'selected:layer:change',
-                  layer: layer,
-                  options: options,
-                })
-                console.log(e, instance, layer, options);
-              }
-            },
-          ]
-        }
-      }),
+      layerSwitcher: switcher,
       search: new SearchEngine({
         collapsed: true,
         collapsible: true,

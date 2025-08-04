@@ -3,9 +3,10 @@ import './charte/dsfr.js'
 import './charte/navigation.js'
 
 import carte from './carte.js'
-// import './page/menu/menu.js'
+import api from 'mcutils/api/api.js'
+import account from './charte/nav-user.js'
 
-import './page/connect.js'
+import './page/connect/connect.js'
 import './page/edit-bar/edit-bar.js'
 import './page/step-bar/step-bar.js'
 import './page/file-bar/file-bar.js'
@@ -17,8 +18,20 @@ import './css/index.scss';
 import './css/control.scss'
 
 /* DEBUG */
-window.carte = carte
+window.carte = carte;
+window.api = api;
 /**/
 
-import dialog from './dialog.js'
-dialog.getDialog().addEventListener('dsfr.disclose', (e) => { console.log(e) })
+function setUser(e) {
+  if (e) {
+    account.setMenu('user', {
+      label: e.username,
+      info: e.email
+    })
+  } else {
+  }
+}
+
+api.whoami(setUser)
+
+api.on('me', setUser)

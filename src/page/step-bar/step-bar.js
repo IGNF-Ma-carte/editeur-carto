@@ -7,7 +7,7 @@ import CustomBar from '../../control/CustomBar/CustomBar.js'
 import CustomToggle from '../../control/CustomToggle/CustomToggle.js'
 
 import './step-bar.scss'
-import openAction from '../file-bar/actions.js'
+import openAction from '../../actions/actions.js'
 
 // Barre ajout de donnée
 let createmap = new CustomToggle({
@@ -44,7 +44,7 @@ let storymap = new CustomToggle({
       storymap.set('autoActivate', true);
       createmap.set('autoActivate', false);
     }
-    info("Stroymap");
+    info("Storymap");
   }
 });
 

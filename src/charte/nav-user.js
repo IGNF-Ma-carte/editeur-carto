@@ -64,3 +64,5 @@ setTimeout(() => {
     })
   })
 }, 100 /* ready */)
+
+export default account;
