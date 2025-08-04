@@ -1,5 +1,4 @@
 import charte from './charte'
-
 import './nav-user.scss'
 
 // Menu
@@ -65,3 +64,5 @@ setTimeout(() => {
     })
   })
 }, 100 /* ready */)
+
+export default account;

@@ -7,11 +7,12 @@ import CustomBar from '../../control/CustomBar/CustomBar.js'
 import CustomToggle from '../../control/CustomToggle/CustomToggle.js'
 
 import './step-bar.scss'
-import openAction from '../file-bar/actions.js'
+import openAction from '../../actions/actions.js'
 
 // Barre ajout de donnée
 let createmap = new CustomToggle({
-  html: 'Création',
+  // html: '<i class="fr-mr-1w ri-1x ri-map-pin-line"></i>Création',
+  html: '<i class="ri-pencil-line"></i><span>Création</span>',
   autoActivate:true,
   className: 'action-button ol-custom-button',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline'],
@@ -29,7 +30,8 @@ let createmap = new CustomToggle({
 });
 
 let storymap = new CustomToggle({
-  html:'Mise en page',
+  // html: '<i class="fr-mr-1w ri-1x ri-map-pin-line"></i>Mise en page',
+  html: '<i class="ri-collage-line"></i><span>Mise en page</span>',
   className: 'action-button ol-custom-button',
   autoActivate:true,
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline'],
@@ -42,12 +44,12 @@ let storymap = new CustomToggle({
       storymap.set('autoActivate', true);
       createmap.set('autoActivate', false);
     }
-    info("Stroymap");
+    info("Storymap");
   }
 });
 
 let save = new CustomButton({
-  className: 'button-hint',
+  className: 'save-button',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'ri-save-line'],
   buttonAttributes: {
     type: 'button',
@@ -61,7 +63,7 @@ let save = new CustomButton({
 });
 
 let share = new CustomButton({
-  className: 'button-hint',
+  className: 'share-button',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'ri-send-plane-line'],
   buttonAttributes: {
     type: 'button',

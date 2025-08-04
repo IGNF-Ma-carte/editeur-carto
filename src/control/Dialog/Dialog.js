@@ -23,6 +23,17 @@ class Dialog {
     // Titre et contenu de la modale
     this.dialogTitle = this.dialog.querySelector('#main-modal__title');
     this.dialogContent = this.dialog.querySelector('#main-modal__content');
+
+    this.onOpen = typeof dialogOptions.onOpen === 'function' ? dialogOptions.onOpen : () => { };
+
+    this.dialog.addEventListener('dsfr.disclose', this.onOpen);
+    this.dialog.addEventListener('dsfr.conceal', (e) => {
+      this.dialog.removeEventListener('dsfr.disclose', this.onOpen);
+    }, { once: true });
+  }
+
+  getDialog() {
+    return this.dialog;
   }
 
   getId() {
@@ -45,6 +56,9 @@ class Dialog {
     }
   }
 
+  setIcon() {
+
+  }
 
   getModalTitle() {
     return this.dialogTitle ? this.dialogTitle.textContent : '';
@@ -85,50 +99,74 @@ class Dialog {
     const btnGroup = document.createElement('div');
     btnGroup.className = 'fr-btns-group fr-btns-group--right fr-btns-group--inline-reverse fr-btns-group--inline-md';
 
-    let hasIcon = false;
-
     buttons.forEach((btnConfig) => {
       const button = document.createElement('button');
       button.classList.add('fr-btn');
-      button.textContent = btnConfig.label || '';
 
-      // Hiérarchie du bouton
-      if (btnConfig.primary !== true) {
-        button.classList.add('fr-btn--secondary');
-      }
+      let hasIcon = false;
 
-      // Icône du bouton (optionnel)
-      if (btnConfig.icon) {
-        hasIcon = true;
-        button.classList.add(btnConfig.icon);
-        const position = btnConfig.iconPosition === 'right' ? 'right' : 'left';
-        button.classList.add(`fr-btn--icon-${position}`);
-      }
+      for (const attr in btnConfig) {
+        const value = btnConfig[attr];
 
-      // Callback (possible de le mettre plus tard)
-      if (typeof btnConfig.callback === 'function') {
-        button.addEventListener('click', btnConfig.callback);
-      }
+        switch (attr) {
+          case 'label':
+            button.textContent = value || '';
+            break;
 
-      // Raccourci pour fermer la modale
-      if (btnConfig.close) {
-        button.setAttribute('aria-controls', this.getId());
-        button.setAttribute('data-fr-opened', 'false');
+          case 'primary':
+            if (value !== true) {
+              button.classList.add('fr-btn--secondary');
+            }
+            break;
+
+          case 'icon':
+            hasIcon = true;
+            if (value) {
+              button.classList.add(value);
+            }
+            break;
+
+          case 'iconPosition':
+            if (hasIcon) {
+              const position = value === 'right' ? 'right' : 'left';
+              button.classList.add(`fr-btn--icon-${position}`);
+            }
+            break;
+
+          case 'callback':
+            if (typeof value === 'function') {
+              button.addEventListener('click', value);
+            }
+            break;
+
+          case 'close':
+            if (value) {
+              button.setAttribute('aria-controls', this.getId());
+              button.setAttribute('data-fr-opened', 'false');
+            }
+            break;
+
+          default:
+            // Ajout d'autres attributs
+            button.setAttribute(attr, value);
+            break;
+        }
       }
 
       btnGroup.appendChild(button);
     });
 
-    // // Place les icônes à gauche
-    // if (hasIcon) {
-    //   btnGroup.classList.add('fr-btns-group--icon-left');
-    // }
-
     footer.appendChild(btnGroup);
     this.dialog.querySelector('.fr-modal__body')?.appendChild(footer);
 
-    // Save reference for later
     this.dialogFooter = footer;
+  }
+
+  /**
+   * Ferme le dialog en simulant un click sur le bouton de fermeture
+   */
+  close() {
+    this.closeBtn.click();
   }
 
   getFooterButtons() {
@@ -140,6 +178,14 @@ class Dialog {
   getFooterButton(index) {
     const buttons = this.getFooterButtons();
     return buttons[index] || null;
+  }
+
+  setOnOpen(onOpen) {
+    this.dialog.removeEventListener('dsfr.disclose', this.onOpen);
+    if (typeof onOpen === 'function') {
+      this.onOpen = onOpen;
+      this.dialog.addEventListener('dsfr.disclose', this.onOpen);
+    }
   }
 }
 
