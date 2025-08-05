@@ -2,8 +2,6 @@
 import TextButton from 'ol-ext/control/TextButton'
 import Widget from "geopf-extensions-openlayers/src/packages/Controls/Widget";
 import Logger from "geopf-extensions-openlayers/src/packages/Utils/LoggerByDefault";
-import SelectorID from "geopf-extensions-openlayers/src/packages/Utils/SelectorID";
-import Utils from "geopf-extensions-openlayers/src/packages/Utils/Helper";
 
 import './CustomTextButton.scss'
 

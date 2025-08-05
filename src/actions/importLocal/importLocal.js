@@ -7,10 +7,10 @@ import { htmlToNode } from '../../charte/utils.js';
 
 function onOpen(e) {
   let dialog = importLocalAction.getDialog();
-  console.log(dialog)
+  console.log('import local')
 }
 
-let importLocalAction = new Action({
+const importLocalAction = new Action({
   title: 'Importer une donnée locale',
   icon: 'ri-file-upload-line',
   content: content,

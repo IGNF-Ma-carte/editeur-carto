@@ -5,7 +5,7 @@ import leftPanel from '../leftPanel';
 
 
 function openMapDialog(e, instance, layer, options) {
-  leftPanel.setModalTitle('Couche : ' + layer.get('name'))
+  leftPanel.setDialogTitle('Couche : ' + layer.get('name'))
   leftPanel.open();
   console.log(e, instance, layer, options);
 }

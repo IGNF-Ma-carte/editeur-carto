@@ -7,10 +7,10 @@ import { htmlToNode } from '../../charte/utils.js';
 
 function onOpen(e) {
   let dialog = importCatalogAction.getDialog();
-  console.log(dialog)
+  console.log('import catalogue');
 }
 
-let importCatalogAction = new Action({
+const importCatalogAction = new Action({
   title: 'Catalogue de cartes',
   icon: 'fr-icon-ign-map-line',
   content: content,

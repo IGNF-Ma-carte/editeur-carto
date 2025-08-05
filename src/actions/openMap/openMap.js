@@ -11,25 +11,25 @@ import { htmlToNode } from '../../charte/utils.js';
 
 const defaultImagePath = 'img/alt-image.png';
 
-const footer = [
+const buttons = [
   {
     label: "Ouvrir",
-    primary: true,
+    kind: 0,
     close: false,
     disabled: true,
     callback: openMap
   },
   {
     label: "Annuler",
-    primary: false,
+    kind: 1,
     close: true
   }
 ];
 
-const footerConnect = [
+const buttonConnect = [
   {
     label: "Se connecter",
-    primary: true,
+    kind: 1,
     close: false,
     'aria-controls': loginDialog.getId(),
     'data-fr-opened': false,
@@ -40,16 +40,16 @@ function onOpen(e) {
   let dialog = openMapAction.getDialog();
 
   if (api.isConnected) {
-    api.getMaps({}, getUserMaps)
+    api.getMaps({}, getUserMaps);
 
   } else {
-    dialog.setModalContent(connectContent)
-    dialog.setFooterButtons(footerConnect);
+    dialog.setDialogContent(connectContent);
+    dialog.setButtons(buttonConnect);
   }
 }
 
 function getUserMaps(e) {
-  let dialog = openMapAction.getDialog(); 4
+  let dialog = openMapAction.getDialog();
 
   const maps = e.maps;
 
@@ -71,11 +71,11 @@ function getUserMaps(e) {
       }
     });
 
-    dialog.setModalContent(list)
+    dialog.setDialogContent(list)
 
-    dialog.setFooterButtons(footer)
+    dialog.setButtons(buttons)
   } else {
-    dialog.setModalContent("<p>Vous n'avez pas de cartes enregistrées</p>")
+    dialog.setDialogContent("<p>Vous n'avez pas de cartes enregistrées</p>")
   }
 }
 
@@ -85,7 +85,7 @@ function selectCard(e) {
     let dialogElement = dialog.getDialog();
 
     // Active le bouton d'ouverture
-    dialog.getFooterButton(0).disabled = false;
+    dialog.getButton(0).disabled = false;
 
     // Déselctionne les autres éléments s'il y'en a
     let currents = dialogElement.querySelectorAll('[aria-current="true"]')
@@ -96,7 +96,7 @@ function selectCard(e) {
     let target;
     if (e.target.classList.contains('ol-map-card')) target = e.target;
     else target = e.target.closest('.ol-map-card');
-    
+
     target.ariaCurrent = true;
   }
 }
@@ -156,7 +156,7 @@ function openMap(e) {
   })
 }
 
-let openMapAction = new Action({
+const openMapAction = new Action({
   title: 'Ouvrir une carte',
   content: content,
   onOpen: onOpen

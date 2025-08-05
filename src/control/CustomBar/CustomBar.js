@@ -2,8 +2,6 @@
 import Bar from 'ol-ext/control/Bar'
 import Widget from "geopf-extensions-openlayers/src/packages/Controls/Widget";
 import Logger from "geopf-extensions-openlayers/src/packages/Utils/LoggerByDefault";
-import SelectorID from "geopf-extensions-openlayers/src/packages/Utils/SelectorID";
-import Utils from "geopf-extensions-openlayers/src/packages/Utils/Helper";
 
 import './CustomBar.scss'
 

@@ -1,6 +1,6 @@
 
 import carte from '../../carte.js'
-import dialog from '../../dialog.js';
+import modal from '../../modal.js';
 
 import CustomButton from '../../control/CustomButton/CustomButton.js'
 import CustomBar from '../../control/CustomBar/CustomBar.js'
@@ -56,7 +56,7 @@ let save = new CustomButton({
     title: "Enregistrer la carte",
     'aria-label': "Enregistrer la carte",
     'data-action': 'save-map',
-    'aria-controls': dialog.getId(),
+    'aria-controls': modal.getId(),
     'data-fr-opened': 'false'
   },
   handleClick: openAction
@@ -70,7 +70,7 @@ let share = new CustomButton({
     title: "Partager la carte",
     'aria-label': "Partager la carte",
     'data-action': 'share-map',
-    'aria-controls': dialog.getId(),
+    'aria-controls': modal.getId(),
     'data-fr-opened': 'false'
   },
   handleClick: openAction
