@@ -7,10 +7,10 @@ import { htmlToNode } from '../../charte/utils.js';
 
 function onOpen(e) {
   let dialog = editLayerStyleAction.getDialog();
-  console.log(dialog)
+  console.log('edit layer style')
 }
 
-let editLayerStyleAction = new Action({
+const editLayerStyleAction = new Action({
   title: 'Catalogue de cartes',
   icon: 'fr-icon-ign-map-line',
   content: content,

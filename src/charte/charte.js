@@ -9,6 +9,7 @@ import 'dsfrign/dist/component/header/header.module.min.js';
 import 'dsfrign/dist/component/navigation/navigation.module.min.js';
 import 'dsfrign/dist/component/button/button.module.min.js';
 import 'dsfrign/dist/component/modal/modal.module.min.js';
+import "dsfrign/dist/component/display/display.module.min.js";
 import "dsfrign/dist/component/password/password.module.min.js";
 
 import 'dsfrign/dist/dsfr.min.css';
@@ -276,14 +277,19 @@ class Footer {
    *  @param {string} options.icon
    */
   addButton(title, options) {
-    ol_ext_element.create('BUTTON', {
+    let btnOptions = {
       className: 'fr-footer__bottom-link fr-link--icon-left fr-px-2v' + (options.icon ? ' '+options.icon : ''),
       text: ' ' + title + ' ',
       parent: ol_ext_element.create('LI', {
         className: 'fr-footer__bottom-item',
         parent: this.links
       })
-    })
+    }
+    // Ajoute les attributs supplémentaires au bouton
+    for (const attr in options) {
+      if (attr !== 'icon') btnOptions[attr] = options[attr];
+    }
+    ol_ext_element.create('BUTTON', btnOptions)
   }
   /**
    * @param {string} href

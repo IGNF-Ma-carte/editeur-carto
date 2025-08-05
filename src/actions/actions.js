@@ -1,5 +1,3 @@
-import dialog from '../dialog';
-import leftPanel from '../leftPanel';
 import Action from './Action';
 import openMapAction from './openMap/openMap';
 import shareMapAction from './shareMap/shareMap';
@@ -7,8 +5,12 @@ import saveMapAction from './saveMap/saveMap';
 import renameMapAction from './renameMap/renameMap';
 import importCatalogAction from './importCatalog/importCatalog';
 import importLocalAction from './importLocal/importLocal';
-import rightPanel from '../rightPanel';
-import Panel from '../control/Panel/Panel';
+import importFlowAction from './importFlow/importFlow';
+import editLayerStyleAction from './editLayerStyle/editLayerStyle';
+
+import getDialog from './dialogs';
+import loginAction from './login/login';
+import Modal from '../control/Modal/Modal';
 
 
 let actions = {
@@ -17,25 +19,43 @@ let actions = {
   'save-map': saveMapAction,
   'share-map': shareMapAction,
   'import-catalog': importCatalogAction,
+  'import-flow': importFlowAction,
   'import-local': importLocalAction,
+  'edit-layer-style': editLayerStyleAction,
+  'login': loginAction,
 }
 
+/**
+ * Gère l'ouverture d'une action au clic sur un bouton ou un toggle
+ * 
+ * @param {PointerEvent} e 
+ */
 let openAction = function (e) {
-  const actionName = e.target.dataset.action;
+  // Pour gérer le cas du toggle
+  const target = e.target || e.explicitOriginalTarget;
+
+  const actionName = target.dataset.action;
+  const dialogId = target.getAttribute('aria-controls');
+  const pressed = target.ariaPressed;
   const action = actions[actionName];
 
-  let d;
+  let dialog = getDialog(dialogId);
 
-  if (actionName.startsWith('import')) d = rightPanel;
-  else d = dialog;
+  if (!dialog) return;
 
   if (action instanceof Action) {
-    action.setAction(d);
-    if (d instanceof Panel) {
-      d.open()
-    }
+    action.setAction(dialog);
   } else if (action) {
-    d.setContent(action);
+    dialog.setContent(action);
+  }
+
+  // N'agit pas sur les modales dsfr
+  if (!(dialog instanceof Modal)) {
+    if (pressed === false || pressed === 'false') {
+      dialog.close();
+    } else {
+      dialog.open();
+    }
   }
 }
 

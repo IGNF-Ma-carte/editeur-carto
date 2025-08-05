@@ -35,19 +35,18 @@ function saveMap(e) {
   let select = dialog.querySelector('[data-field="theme"]');
 }
 
-let saveMapAction = new Action({
+const saveMapAction = new Action({
   title: 'Enregistrer',
   content: content,
-  footer: [
+  buttons: [
     {
       label: "Enregistrer",
-      primary: true,
-      close: false,
+      kind: 0,
       callback: saveMap,
     },
     {
       label: "Annuler",
-      primary: false,
+      kind: 1,
       close: true
     }
   ],

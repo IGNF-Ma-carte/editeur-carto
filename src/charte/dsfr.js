@@ -1,4 +1,5 @@
 import charte from './charte.js'
+import displasyDialog from '../displayDialog.js'
 
 // Set service info
 charte.setService({
@@ -29,7 +30,9 @@ charte.addFooterLink('Accessibilité : partiellement conforme', 'https://cartes.
 charte.addFooterLink('Mentions légales', 'https://cartes.gouv.fr/mentions-legales')
 charte.addFooterLink('Données personnelles', 'https://cartes.gouv.fr/donnees-personnelles')
 charte.addFooterLink('Gestion des cookies', '#')
-charte.addFooterLink('Pagetest', '/test')
 charte.addFooterButton('Paramètres d\'affichage', {
-  icon: 'fr-icon-theme-fill'
+  icon: 'fr-icon-theme-fill',
+  title: "Paramètres d'affichage",
+  'aria-controls': 'display-modal',
+  'data-fr-opened': false,
 })

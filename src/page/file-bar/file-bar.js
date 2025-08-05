@@ -1,6 +1,6 @@
 import carte from '../../carte.js'
 
-import dialog from '../../dialog.js';
+import modal from '../../modal.js';
 
 
 import './file-bar.scss'
@@ -59,7 +59,7 @@ let openMapBtn = new CustomButton({
   buttonAttributes: {
     'data-action': 'open-map',
     type: 'button',
-    'aria-controls': dialog.getId(),
+    'aria-controls': modal.getId(),
     'data-fr-opened': 'false'
   },
   html: 'Ouvrir une carte',
@@ -91,7 +91,7 @@ let saveMapBtn = new CustomButton({
   buttonAttributes: {
     'data-action': 'save-map',
     type: 'button',
-    'aria-controls': dialog.getId(),
+    'aria-controls': modal.getId(),
     'data-fr-opened': 'false'
   },
   html: 'Enregistrer',
@@ -104,7 +104,7 @@ let renameMapBtn = new CustomButton({
   buttonAttributes: {
     'data-action': 'rename-map',
     type: 'button',
-    'aria-controls': dialog.getId(),
+    'aria-controls': modal.getId(),
     'data-fr-opened': 'false'
   },
   html: 'Renommer',
@@ -134,7 +134,7 @@ let shareMapBtn = new CustomButton({
   buttonAttributes: {
     'data-action': 'share-map',
     type: 'button',
-    'aria-controls': dialog.getId(),
+    'aria-controls': modal.getId(),
     'data-fr-opened': 'false'
   },
   html: 'Partager',

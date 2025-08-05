@@ -1,62 +1,65 @@
 
 import carte from '../../carte.js'
 
-import Bar from 'ol-ext/control/Bar'
-import TextButton from 'ol-ext/control/TextButton'
-import Button from 'ol-ext/control/Button'
-import Toggle from 'ol-ext/control/Toggle'
-
 import CustomButton from '../../control/CustomButton/CustomButton.js'
 import CustomBar from '../../control/CustomBar/CustomBar.js'
 import CustomToggle from '../../control/CustomToggle/CustomToggle.js'
 
 import Draw from 'ol/interaction/Draw.js';
-import Modify from 'ol/interaction/Modify.js';
-import VectorStyle from 'mcutils/layer/VectorStyle.js'
-import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 
 import openAction from '../../actions/actions.js'
 
 import './edit-bar.scss'
-import { Control } from 'ol/control.js'
+import rightPanel from '../../rightPanel.js';
+
+
+// Fonction temporaire pour les toggle
+// (n'envoient pas d'événement au click)
+function onToggleAction() {
+  let e = new Event('click', this.button_)
+  openAction(e);
+}
 
 // Barre ajout de donnée
-let catalogue = new CustomButton({
-  className: 'button-hint',
+let catalogue = new CustomToggle({
+  className: 'button-hint  ol-custom-button ol-custom-toggle',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'ri-book-open-line'],
   buttonAttributes: {
     'data-action': 'import-catalog',
+    'aria-controls': rightPanel.getId(),
     title: "Importer une donnée de cartes.gouv",
     'aria-label': "Importer une donnée de cartes.gouv",
   },
-  handleClick: openAction,
+  onToggle: onToggleAction
 });
 
-let flux = new CustomButton({
-  className: 'button-hint',
+let flux = new CustomToggle({
+  className: 'button-hint  ol-custom-button ol-custom-toggle',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'ri-global-line'],
   buttonAttributes: {
+    'data-action': 'import-flow',
+    'aria-controls': rightPanel.getId(),
     title: "Importer un flux",
     'aria-label': "Importer un flux",
   },
-  handleClick: function () {
-    info("Ajout d'un flux");
-  }
+  onToggle: onToggleAction
 });
 
-let file = new CustomButton({
-  className: 'button-hint',
+let file = new CustomToggle({
+  className: 'button-hint  ol-custom-button ol-custom-toggle',
   buttonClasses: ['fr-btn', 'fr-btn--tertiary-no-outline', 'ri-file-upload-line'],
   buttonAttributes: {
     'data-action': 'import-local',
+    'aria-controls': rightPanel.getId(),
     title: "Importer une donnée locale",
     'aria-label': "Importer une donnée locale",
   },
-  handleClick: openAction
+  onToggle: onToggleAction
 });
 
 let addDataBar = new CustomBar({
+  toggleOne: true,
   controls: [
     catalogue,
     flux,
@@ -197,12 +200,6 @@ let mainbar = new CustomBar({
   toggleOne: true,
   controls: [carte.getControl('layerSwitcher'), addDataBar, editDataBar]
 })
-
-
-// Show info
-function info(i) {
-  console.log(i || "");
-}
 
 carte.addControl('mainBar', mainbar)
 

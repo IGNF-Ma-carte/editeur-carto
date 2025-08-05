@@ -1,24 +1,24 @@
 import Dialog from '../control/Dialog/Dialog'
 
 /**
- * Bouton à mettre dans le footer d'une modale
+ * Bouton à mettre dans le buttons d'un dialog
  *  
  * @typedef {Object} FooterButton
  * @property {string} label - Label du bouton.
- * @property {boolean} [primary=false] - Indique si le bouton est un bouton primaire.
- * @property {boolean} [close=false] - Lie le bouton à la fermeture de la modale.
+ * @property {boolean} [kind=0] - Classe du bouton.
+ * @property {boolean} [close=false] - Bouton de fermeture du dialog.
  * @property {Function} [callback] - Fonction au clic sur le bouton.
  */
 
 /**
  * Action à définir pour un bouton ou un autre élément.
  * 
- * @typedef {Object} ActionObject
- * @property {string} title - Titre de la modale.
- * @property {string|HTMLElement} content - Contenu de la modale.
+ * @typedef {Object} ActionOptions
+ * @property {string} title - Titre d'un dialog.
+ * @property {string|HTMLElement} content - Contenu d'un dialog.
  * @property {string} [icon] - Icône du titre.
- * @property {FooterButton[]} [footer] - Boutons d'actions de la modale.
- * @property {Function} [onOpen] - Fonction à appeler à l'ouverture de la modale.
+ * @property {FooterButton[]} [buttons] - Boutons d'actions d'un dialog.
+ * @property {Function} [onOpen] - Fonction à appeler à l'ouverture d'un dialog.
  */
 
 /**
@@ -31,7 +31,7 @@ class Action {
   constructor(options) {
     this.title = options.title || '';
     this.content = options.content || '';
-    this.footer = options.footer;
+    this.buttons = options.buttons;
     this.onOpen = typeof options.onOpen === 'function' ? options.onOpen : () => { };
     this.icon = options.icon || '';
   }
@@ -57,14 +57,14 @@ class Action {
   }
 
   /** @returns {ActionButton[]} */
-  get footer() {
-    return this._footer;
+  get buttons() {
+    return this._buttons;
   }
 
   /** @param {ActionButton[]} buttons */
-  set footer(buttons) {
+  set buttons(buttons) {
     if (!Array.isArray(buttons)) return;
-    this._footer = buttons;
+    this._buttons = buttons;
   }
 
   /** @returns {Dialog} */
@@ -73,11 +73,11 @@ class Action {
   }
 
   /**
-   * Ajoute un bouton dans le footer
+   * Ajoute un bouton dans le buttons
    * @param {ActionButton} button
    */
-  addFooterButton(button) {
-    this._footer.push(button);
+  addButton(button) {
+    this._buttons.push(button);
   }
 
   /**
@@ -85,8 +85,8 @@ class Action {
    * @param {number} index
    * @returns {ActionButton|undefined}
    */
-  getFooterButton(index) {
-    return this._footer[index];
+  getButton(index) {
+    return this._buttons[index];
   }
 
 
@@ -96,8 +96,7 @@ class Action {
    */
   setAction(dialog) {
     this.dialog = dialog;
-    dialog.setContent({ title: this.title, content: this.content, footer: this.footer });
-    dialog.setIcon(this.icon)
+    dialog.setContent({ title: this.title, icon: this.icon, content: this.content, buttons: this.buttons });
     dialog.setOnOpen(this.onOpen);
   }
 }

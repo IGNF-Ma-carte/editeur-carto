@@ -2,11 +2,8 @@
 import Toggle from 'ol-ext/control/Toggle'
 import Widget from "geopf-extensions-openlayers/src/packages/Controls/Widget";
 import Logger from "geopf-extensions-openlayers/src/packages/Utils/LoggerByDefault";
-import SelectorID from "geopf-extensions-openlayers/src/packages/Utils/SelectorID";
-import Utils from "geopf-extensions-openlayers/src/packages/Utils/Helper";
 
 import './CustomToggle.scss'
-import CustomButton from '../CustomButton/CustomButton';
 
 const logger = Logger.getLogger("CustomToggle");
 

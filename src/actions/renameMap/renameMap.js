@@ -20,19 +20,18 @@ function renameMap(e) {
   dialog.close()
 }
 
-let renameMapAction = new Action({
+const renameMapAction = new Action({
   title: 'Renommer',
   content: content,
-  footer: [
+  buttons: [
     {
       label: "Enregistrer",
-      primary: true,
-      close: false,
+      kind: 0,
       callback: renameMap
     },
     {
       label: "Annuler",
-      primary: false,
+      kind: 1,
       close: true
     }
   ],

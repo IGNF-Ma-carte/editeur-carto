@@ -24,7 +24,7 @@ function copy(e) {
   }
 }
 
-let shareMapAction = new Action({
+const shareMapAction = new Action({
   title: 'Partager',
   content: content,
   onOpen: onOpen
