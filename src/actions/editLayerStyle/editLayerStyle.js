@@ -1,20 +1,20 @@
 import Action from '../Action.js';
-import content from './editLayerStyle.html?raw';
-import carte from '../../carte.js';
-import ol_ext_element from 'ol-ext/util/element';
+import editStyleItem from './edit-style.js';
+import editTexteItem from './edit-texte.js';
+import editInfobulleItem from './edit-infobulle.js';
+import editAttributeItem from './edit-attribute.js';
 import './editLayerStyle.scss';
-import { htmlToNode } from '../../charte/utils.js';
 
 function onOpen(e) {
-  let dialog = editLayerStyleAction.getDialog();
-  console.log('edit layer style')
+  let dialog = editLayerAction.getDialog();
 }
 
-const editLayerStyleAction = new Action({
-  title: 'Catalogue de cartes',
-  icon: 'fr-icon-ign-map-line',
-  content: content,
-  onOpen: onOpen
+const editLayerAction = new Action({
+  title: 'Point',
+  icon: 'ri-global-line',
+  onOpen: onOpen,
+  // content: content,
+  items: [editStyleItem, editTexteItem, editInfobulleItem, editAttributeItem]
 })
 
-export default editLayerStyleAction;
+export default editLayerAction;

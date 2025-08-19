@@ -1,6 +1,7 @@
 
 import carte from '../../carte.js'
 
+import Toggle from 'ol-ext/control/Toggle'
 import CustomButton from '../../control/CustomButton/CustomButton.js'
 import CustomBar from '../../control/CustomBar/CustomBar.js'
 import CustomToggle from '../../control/CustomToggle/CustomToggle.js'
@@ -12,13 +13,38 @@ import openAction from '../../actions/actions.js'
 
 import './edit-bar.scss'
 import rightPanel from '../../rightPanel.js';
+import getDialog from '../../actions/dialogs.js';
+import leftPanel from '../../leftPanel.js';
 
-
+/**
+ * @type {CustomToggle}
+ */
+let toggle;
 // Fonction temporaire pour les toggle
 // (n'envoient pas d'événement au click)
-function onToggleAction() {
-  let e = new Event('click', this.button_)
+function onToggleAction(ev) {
+  toggle = this;
+  let e = new CustomEvent('click', {
+    detail: {
+      'target': toggle.button_,
+    }
+  });
   openAction(e);
+}
+
+rightPanel.onClose((e) => {
+  closeToggle(e, toggle)
+}, false)
+
+/**
+ * Ferme le toggle à la fermeture du dialog
+ * @param {Event} e 
+ * @param {Toggle} toggle 
+ */
+function closeToggle(e, toggle) {
+  if (toggle.getActive()) {
+    toggle.setActive(false)
+  }
 }
 
 // Barre ajout de donnée

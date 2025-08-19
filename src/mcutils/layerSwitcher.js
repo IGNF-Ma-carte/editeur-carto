@@ -2,12 +2,13 @@
 import { LayerSwitcher } from 'geopf-extensions-openlayers';
 import carte from '../carte';
 import leftPanel from '../leftPanel';
+import editLayerAction from '../actions/editLayerStyle/editLayerStyle';
 
 
 function openMapDialog(e, instance, layer, options) {
-  leftPanel.setDialogTitle('Couche : ' + layer.get('name'))
+  editLayerAction.setAction(leftPanel);
+  // leftPanel.setDialogTitle('Couche : ' + layer.get('name'))
   leftPanel.open();
-  console.log(e, instance, layer, options);
 }
 
 const switcher = new LayerSwitcher({
@@ -18,7 +19,6 @@ const switcher = new LayerSwitcher({
     counter: true,
     allowEdit: true,
     advancedTools: [
-      // icone par defaut
       {
         label: 'Sélectionner la couche',
         icon: 'fr-icon-cursor-line',

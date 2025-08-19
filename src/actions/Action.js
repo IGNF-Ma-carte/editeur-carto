@@ -32,6 +32,7 @@ class Action {
     this.title = options.title || '';
     this.content = options.content || '';
     this.buttons = options.buttons;
+    this.items = options.items;
     this.onOpen = typeof options.onOpen === 'function' ? options.onOpen : () => { };
     this.icon = options.icon || '';
   }
@@ -67,6 +68,18 @@ class Action {
     this._buttons = buttons;
   }
 
+  /** @returns {ActionButton[]} */
+  get items() {
+    return this._items;
+  }
+
+  /** @param {ActionButton[]} items */
+  set items(items) {
+    if (!Array.isArray(items)) return;
+    this._items = items;
+  }
+
+
   /** @returns {Dialog} */
   getDialog() {
     return this.dialog;
@@ -96,7 +109,7 @@ class Action {
    */
   setAction(dialog) {
     this.dialog = dialog;
-    dialog.setContent({ title: this.title, icon: this.icon, content: this.content, buttons: this.buttons });
+    dialog.setContent({ title: this.title, icon: this.icon, content: this.content, buttons: this.buttons, items: this.items });
     dialog.setOnOpen(this.onOpen);
   }
 }

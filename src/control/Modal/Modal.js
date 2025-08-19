@@ -44,11 +44,12 @@ class Modal extends Dialog {
   }
 
   /**
-   * @param {HTMLDialogElement} dialog 
+   * @param {Dialog} dialog 
    * @override
    */
   _close(dialog) {
     // Laisse le DSFR gérer la fermeture de la modale
+    dialog.closeBtn.click();
   }
 
 

@@ -97,7 +97,7 @@
 
 .ol-bar.ol-top .ol-custom-button > button {
   &[aria-label]:hover::after {
-  transform: translateX(-16px) translateY(40px);
+    transform: translateX(-16px) translateY(40px);
 
     // Flèche vers le haut
     background-image: conic-gradient(
@@ -132,20 +132,31 @@
     margin-top: 0.125rem;
   }
 }
+.ol-bar.ol-top.ol-right .ol-custom-button > button {
+  &[aria-label]:hover::after {
+    transform: translateY(40px);
+    right: 0;
+    background-position:
+      calc(100% - 20px) 0.125rem,
+      calc(100% - 20px) 0,
+      0 0.45rem,
+      0 0.5rem;
+  }
+}
 
 .ol-control.ol-control button {
-    &:focus {
-      outline-color: #0a76f6;
-      outline-offset: -2px;
-      outline-style: solid;
-      outline-width: 2px;
-    }
-
-    &:focus:not(:focus-visible) {
-      outline-style: none;
-    }
-
-    &:focus:focus-visible {
-      outline-style: solid;
-    }
+  &:focus {
+    outline-color: #0a76f6;
+    outline-offset: -2px;
+    outline-style: solid;
+    outline-width: 2px;
   }
+
+  &:focus:not(:focus-visible) {
+    outline-style: none;
+  }
+
+  &:focus:focus-visible {
+    outline-style: solid;
+  }
+}
