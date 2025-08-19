@@ -3,19 +3,28 @@
 .ignf-panel {
   margin: 0;
   padding: 0;
-  width: 380px;
   border: none;
-  top: 120px;
   bottom: 0;
+  width: 100%;
+  max-height: 80%;
+  // overflow-y: auto;
 
-  &.ignf-panel__left {
-    left: 0.5rem;
+  @include rf.respond-from('sm') {
+    width: 380px;
+    top: 120px;
+
+    &.ignf-panel__left {
+
+      left: 0.5rem;
+      width: 330px;
+    }
+
+    &.ignf-panel__right {
+      right: 4rem;
+      left: auto;
+    }
   }
 
-  &.ignf-panel__right {
-    right: 4rem;
-    left: auto;
-  }
 
   &__header {
     padding: 0.5rem;
@@ -36,8 +45,16 @@
       display: flex;
     }
   }
-
-  &__body {
-    padding: 0 1rem;
+  
+  &__content {
+    padding: 0 0.75rem 1.5rem;
   }
+
+  &:has(.fr-tabnav.fr-hidden) {
+    .ignf-panel__content {
+      padding-top: 1.5rem;
+    }
+  }
+
+
 }

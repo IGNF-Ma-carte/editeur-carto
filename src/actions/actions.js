@@ -32,7 +32,7 @@ let actions = {
  */
 let openAction = function (e) {
   // Pour gérer le cas du toggle
-  const target = e.target || e.explicitOriginalTarget;
+  const target = e.target || e.detail.target;
 
   const actionName = target.dataset.action;
   const dialogId = target.getAttribute('aria-controls');

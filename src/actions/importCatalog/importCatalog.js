@@ -7,7 +7,6 @@ import { htmlToNode } from '../../charte/utils.js';
 
 function onOpen(e) {
   let dialog = importCatalogAction.getDialog();
-  console.log('import catalogue');
 }
 
 const importCatalogAction = new Action({

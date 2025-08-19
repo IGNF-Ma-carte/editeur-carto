@@ -123,21 +123,22 @@ class Dialog {
 
 
   /**
-   * Créé le dialog en instanciant aussi les 
+   * Créé le dialog en instanciant les éléments utiles
    * 
    * @param {Object} options Options de création du panneau
    */
   _createDialog(options) {
     let dialog = this.dialog;
+    let self = this;
 
     this.closeBtn = this.selectElement(this.selectors.BTN_CLOSE);
     this.closeBtn.setAttribute('aria-controls', this.getId());
 
     // Permet de laisser les sous-classes override la fonction
     // de fermeture du dialog
-    let closeFn = this._close;
+    let closeFn = this.close;
     this.closeBtn.addEventListener('click', () => {
-      closeFn(dialog);
+      closeFn(self);
     });
 
     // Titre et contenu du dialog
@@ -262,19 +263,9 @@ class Dialog {
    * @param {DialogButton[]} options.buttons Boutons à ajouter.
    */
   setContent(options) {
-    if (options.title) {
-      this.setDialogTitle(options.title);
-    }
-
-    if (options.icon) {
-      this.setIcon(options.icon);
-    }
-
-    if (options.content) {
-      this.setDialogContent(options.content);
-    }
-
-    // On l'ajoute dans tous les cas pour enlever les boutons au besoin.
+    this.setDialogTitle(options.title);
+    this.setIcon(options.icon);
+    this.setDialogContent(options.content);
     this.setButtons(options.buttons);
   }
 
@@ -445,21 +436,23 @@ class Dialog {
    * Fonction de fermeture du dialog.
    * Peut-être override dans les sous-classes.
    * 
-   * @param {HTMLDialogElement} dialog 
+   * @param {Dialog} dialog 
    */
   _close(dialog) {
-    dialog.close();
+    dialog.getDialog().close();
   }
 
   /**
    * Ferme le dialog en simulant un click sur le bouton de fermeture.
    * Envoie un événement sur le dialog.
    * 
+   * @param {Dialog} self 
+   * 
    * @fires HTMLDialogElement#dialog:close
    */
-  close() {
-    this.closeBtn.click();
-    this.dialog.dispatchEvent(new Event(this.selectors.CLOSE_EVENT, this));
+  close(self = this) {
+    self._close(self);
+    self.dialog.dispatchEvent(new Event(self.selectors.CLOSE_EVENT, self));
   }
 
   /**
@@ -492,6 +485,20 @@ class Dialog {
       this.onOpen = onOpen;
       this.dialog.addEventListener(this.selectors.OPEN_EVENT, this.onOpen);
     }
+  }
+
+  on(type, callback, once = true) {
+    let dialog = this.dialog;
+
+    dialog.addEventListener(type, callback, { once: !!once })
+  }
+
+  onOpen(callback, once) {
+    this.on(this.selectors.OPEN_EVENT, callback, once)
+  }
+
+  onClose(callback, once) {
+    this.on(this.selectors.CLOSE_EVENT, callback, once)
   }
 }
 

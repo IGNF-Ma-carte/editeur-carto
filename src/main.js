@@ -13,9 +13,7 @@ import './page/file-bar/file-bar.js'
 
 // Custom CSS
 import 'remixicon/fonts/remixicon.css'
-import './css/icons.scss';
 import './css/index.scss';
-import './css/control.scss'
 
 /* DEBUG */
 window.carte = carte;

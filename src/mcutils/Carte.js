@@ -4,6 +4,7 @@ import {
   SearchEngine,
 } from 'geopf-extensions-openlayers';
 import switcher from './layerSwitcher';
+import Layer from 'ol/layer/Layer.js';
 
 /** GPP Carte overwrite Carte options / controls
  */
@@ -88,6 +89,33 @@ class GPPCarte extends Carte {
     // Remove ScaleLine from canvas
     this.getControl('scaleLine').element.style.visibility = ''
     this.getMap().render()
+  }
+
+  /**
+   * 
+   * @param {import("ol/layer").Layer} layer 
+   * @param {boolean} zoom
+   */
+  addLayer(layer, zoom = false) {
+    // const layers = this.getMap().getLayers();
+    // layers.insertAt(layers.getLength(), layer);
+    let map = this.getMap();
+    map.addLayer(layer);
+
+    if (map.getView() && map.getSize() && layer.getExtent) {
+      let extent = layer.getExtent();
+      if (!extent) {
+        let source = layer.getSource();
+        if (source && source.getExtent) {
+          extent = source.getExtent();
+        } else {
+          extent = source.getTileGrid().getExtent();
+        }
+      }
+      if (extent && extent[0] !== Infinity) {
+        map.getView().fit(extent, map.getSize());
+      }
+    }
   }
 }
 
